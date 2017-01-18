@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- 
-        ref: http://bootsnipp.com/snippets/45ngx
-    -->
-    <meta charset="utf-8"></meta>
-    <title>Jerry Home Page</title>
-    <link rel="shortcut icon" href="./img/favicon.png" />
-    <link rel="stylesheet" 
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
-        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
-        crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
-        rel="stylesheet" 
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
-        crossorigin="anonymous">
-    <link href="./css/blog.css" 
-        rel="stylesheet">
-    <link rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night-eighties.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-</head>
-<body>
-    <div class="blog-nav">
-        <div class="avatar">
-            <img src="./img/avatar.png" alt="avatar"/>
-        </div>
-        <br/>
-        <div>
-            <ul class="nav-list">
-                <h5><strong>Jerry test</strong></h5>
-                <li>Home</li>
-                <li>Office</li>
-                <li>Home</li>
-                <li>Office</li>
-                <li>Home</li>
-                <li>Office</li>          
-            </ul>
-            <ul class="nav-list">
-                <h5><strong>Jerry test</strong></h5>
-                <li>Home</li>
-                <li>Office</li>
-                <li>Home</li>
-                <li>Office</li>
-                <li>Home</li>
-                <li>Office</li>          
-            </ul>
-        </div>
-    </div>
-    <div class="blog-container">
-        <div class="blog-nav-mapping">
-            <p>Welcome!</p>
-        </div>
-        <div class="blog-content">
+---
+layout: default
+---
             <section class="post-meta">
                 <h1 class="justify-content-center">How are you today</h1>
                 <span class="badge badge-default">Javascript</span>
@@ -95,7 +42,7 @@
                     <p><em>This line rendered as italicized text.</em></p>
                 </article>
                <figure class="figure">
-                   <img src="./img/post/test.gif" class="figure-img img-fluid rounded" alt="map">
+                   <img src="{{site.url}}/img/post/test.gif" class="figure-img img-fluid rounded" alt="map">
                    <figcaption class="figure-caption text-right">Fig. 1: SSSSS</figcaption>
                </figure>
                <p>
@@ -103,17 +50,4 @@
                    To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
                </p>
             </section>           
-        </div>
-
-    </div>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" 
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" 
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" 
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" 
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" 
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" 
-        crossorigin="anonymous"></script>
-</body>
-</html>
+    
