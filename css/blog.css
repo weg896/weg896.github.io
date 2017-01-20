@@ -44,6 +44,55 @@
     color: white;
     font-weight: bolder;
 }
+.nav-social{
+    font-size:1.8em;
+    width:100%;
+    margin-left:12%;
+    padding:0;
+}
+.nav-social > li{
+    display:inline-block;
+    list-style-type:none;
+    border-radius: 7px;
+    width:1.4em;
+    height:1.4em;
+    background-color:rgba(255,255,255,0.3);
+    margin:0.3em;
+    -moz-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    -webkit-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+}
+
+.nav-social .fa{
+    display: flex;
+    margin:0.2em;
+    justify-content: center;
+    -moz-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    -webkit-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+}
+
+.nav-social .fa-envelope{
+    color: #999;
+}
+.nav-social  .fa-github{
+    color: #999;
+}
+.nav-social a{
+    text-decoration: none;
+}
+.nav-social > li:hover{
+    background-color: rgba(255,255,255,0.6);
+}
+
+.nav-social > li:hover .fa-envelope{
+    color: #F1AB53;
+}
+.nav-social > li:hover .fa-github{
+    color: #624aba;
+}
 .blog-container{
     width: 100%;
     height: 100%;
@@ -70,6 +119,10 @@
 }
 .post-meta > article {
     margin-bottom: 1.1em;
+}
+.post-title{
+    text-align: center;
+    font-style: initial;
 }
 .page-blog{
     margin:3rem 0;
@@ -149,4 +202,9 @@
 .pagination-sm .page-item:last-child .page-link-blog {
     border-bottom-right-radius: 0.2rem;
     border-top-right-radius: 0.2rem;
+}
+.post-tag{
+    color:#636c72;
+    font-size:1.02em;
+    text-align: center;
 }
