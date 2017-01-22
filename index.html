@@ -1,98 +1,42 @@
 ---
 layout: default
 ---
+
+            {% for post in paginator.posts %}
             <section class="post-meta">
-                <h1>How are you today</h1>
-                <p>2014 January 22</p>
-                <article>Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                    Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
+                <h1>{{post.title}}</h1>
+                <p>{{post.date}}</p>
+                <article>
+                    {{post.meta}}
                 </article>
-                <button type="button" class="btn btn-outline-danger btn-sm">More</button>
+                <a href="{{post.url}}"><button type="button" class="btn btn-outline-danger btn-sm">More</button></a>
             </section>
             <hr/>
-            <section class="post-meta">
-                <h1>How are you today</h1>
-                <p>2014 January 22</p>
-                <article>Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                    Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                </article>
-                <button type="button" class="btn btn-outline-danger btn-sm">More</button>
-            </section>
-            <hr/>
-            <section class="post-meta">
-                <h1>How are you today</h1>
-                <p>2014 January 22</p>
-                <article>Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                    Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                </article>
-                <button type="button" class="btn btn-outline-danger btn-sm">More</button>
-            </section>
-            <hr/>
-            <section class="post-meta">
-                <h1>How are you today</h1>
-                <p>2014 January 22</p>
-                <article>Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                    Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                </article>
-                <button type="button" class="btn btn-outline-danger btn-sm">More</button>
-            </section>
-            <hr/>
-            <section class="post-meta">
-                <h1>How are you today</h1>
-                <p>2014 January 22</p>
-                <article>Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                    Cras justo odio, dapibus ac facilisis in, 
-                    egestas eget quam. Fusce dapibus, 
-                    tellus ac cursus commodo, 
-                    tortor mauris condimentum nibh, 
-                    ut fermentum massa justo sit amet risus.
-                </article>
-                <button type="button" class="btn btn-outline-danger btn-sm">More</button>
-            </section>
-            <hr/>
+            {% endfor %}
             <div class="page-blog"></div>
             <nav aria-label="Page navigation ">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link-blog" href="#">Previous</a></li>
-                    <li class="page-item active"><a class="page-link-blog" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link-blog" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link-blog" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link-blog" href="#">Next</a></li>
+                    {% if paginator.previous_page %} 
+                        <li class="page-item"><a class="page-link-blog" href="{{paginator.previous_page_path}}">
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link-blog">
+                    {% endif %}Previous</a></li>
+                    {% for num in (1..paginator.total_pages) %}
+                        {% if paginator.page == num %}
+                            <li class="page-item active"><a class="page-link-blog">{{ num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link-blog" 
+                                {% if num == 1 %}
+                                    href="{{site.url}}">
+                                {% else %}
+                                    href="{{site.url}}/blog/page{{num}}/">
+                                {% endif %}{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if paginator.next_page %}
+                        <li class="page-item"><a class="page-link-blog"  href="{{ paginator.next_page_path }}">
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link-blog">
+                    {% endif %}Next</a></li>
                 </ul>
             </nav>            

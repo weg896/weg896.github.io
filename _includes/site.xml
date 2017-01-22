@@ -1,0 +1,8 @@
+---
+---
+<url>
+	<loc>{{site.url}}</loc>
+	<lastmod>{{entry.date}}</lastmod>
+	<changefreq>weekly</changefreq>
+	<priority>1.0</priority>
+</url>
