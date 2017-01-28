@@ -1,0 +1,15 @@
+
+            {% for post in site.posts %}
+			{% if post.category == include.paraCate %}
+            <section class="post-meta">
+                <h1>{{post.title}}</h1>
+                <p>{{post.date}}</p>
+                <article>
+                    {{post.meta}}
+                </article>
+                <a href="{{post.url}}"><button type="button" class="btn btn-outline-danger btn-sm">More</button></a>
+            </section>
+            <hr/>
+			{% endif %}
+            {% endfor %}
+            
