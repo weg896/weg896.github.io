@@ -28,7 +28,7 @@
 .nav-list::first-line{
     color: rgba(255,255,255,0.5)
 }
-.nav-list > h5{
+.nav-list h5{
     padding: 1.25% 22%;
 }
 .nav-list li{
@@ -216,4 +216,10 @@
     color:#636c72;
     font-size:1.02em;
     text-align: center;
+    margin: 0.5em 0;
+}
+.post-tag-left{
+    color:#636c72;
+    font-size: 1.02em;
+    margin: 0.5em 0;
 }

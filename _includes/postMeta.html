@@ -2,8 +2,12 @@
             {% for post in site.posts %}
 			{% if post.category == include.paraCate %}
             <section class="post-meta">
-                <h1>{{post.title}}</h1>
-                <p>{{post.date}}</p>
+                <h1><strong>{{post.title}}</strong></h1>
+				<div class="post-tag-left">
+					<span class="fa fa-tag" aria-hidden="true">&nbsp{{post.category}}</span>
+					&nbsp&nbsp&nbsp
+					<span class="fa fa-calendar-o" aria-hidden="true">&nbsp{{ post.date | date_to_long_string }}</span>
+				</div>
                 <article>
                     {{post.meta}}
                 </article>
