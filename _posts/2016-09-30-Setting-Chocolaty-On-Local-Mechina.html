@@ -1,0 +1,62 @@
+---
+layout: default
+title: Setting Chocolatey On Local Mechina
+meta: "ssss"
+date: 2016-09-30
+category: c#
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category %}
+    <h3>What is Chocolatey (Choco)?</h3>
+
+    <article>
+        If you are familiar with <code>apt-get</code> command line program in Linux, 
+        you may had used <code>apt-get install</code>, 
+        <code>apt-get update</code> for managment your Linux software
+        But how about in Windows? 
+    </article>
+
+    <article>
+        <a href="https://chocolatey.org/">Choco</a> is a package manager for Windows 
+        and it has similar functions compare to <code>apt-get</code>. 
+        It allows you to install, upgrade, configurate, and uninstall Windows software.
+        For example, just simplly type <code>choco install PROGRAM_NAME</code> in command line,
+        choco will automatelly install the program that you need.
+    </article>
+
+    <br/>
+    <h3>But I want my own Choco Server</h3>
+
+    <article>
+        if your company or your group requires deplying software fast, easy and secure,
+        you may meed to set up your own Choco Server. 
+        Then the following packages you would need:
+    </article>
+
+    <ul>
+        <li><a href="https://github.com/chocolatey/choco">Souce code of chocolatey</li>
+        <li><a href="https://bitbucket.org/aristar/jnuget/branch/default">Source code of jnuget</a></li>
+        <li><a href="http://tomcat.apache.org/download-90.cgi">Apache Tomcat</a></li>
+    </ul>
+
+    <br/>
+    <h3>Understanding Choco's code</h3>
+
+    <article> 
+        Using "choco install" command as example
+        <br/><br/>
+        The entry point of choco is function <code>private static void Main(string[] args)</code> which in file <u>src/chocolatey.console/Program.cs</u>.
+        After do some variables and directories checking, 
+        the argument of command input will pass to <code>ConfigurationBuilder.set_up_configuration(args,config,container,license,warning => {warnings.Add(warning);});)</code></br>
+        This function will parse argument,  configurate file path and set environment values.
+        <br/><br/>
+        Another core file is <u>Nuget.Core</u>. <a href="https://www.nuget.org/">Nuget</a> is a Microsoft platform package manager. 
+        Yes, Chocolatey is using <u>Nuget.Core</u> to connect packages source server to get and unzip .nupkg 
+        (In here, .nupkg is a package that contain .nuspec, point out specification of the software you want to install,
+         and powershell script for actual choco command).
+        <br/><br/>
+        The enviroument configuration file is <u>src/chocolatey/infrastructure.app/ApplicationParameters.cs</u>. 
+        It points out where to store temprary file, whate kinds of files it should look, and where to log.
+        <u>src/chocolatey/infrastructure.app/configuration/chocolatey.config</u> indicate the .nuget source server address.
+    </article>
+<section>
