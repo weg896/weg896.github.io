@@ -7,32 +7,40 @@ category: c#
 ---
 <section class="post-meta">
     {% include postTitle.html title=page.title date=page.date category=page.category %}
-    <h3>What is Chocolatey (Choco)?</h3>
-
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#what_is_chocolatey">What is Chocolatey (Choco)?</a></li>
+            <li><a href="#own_choco_server">But I want my own Choco Server</a></li>
+            <li><a href="#inside_nupkg">What things are inside .nupkg</a></li>
+            <li><a href="#files_for_jnuget">Two Important Files for jnuget</a></li>
+        </ul>
+    </div>
+    <br/>
+    <!-- What is Chocolatey (Choco)? -->
+    <h3 id="what_is_chocolatey">What is Chocolatey (Choco)?</h3>
     <article>
         If you are familiar with <code>apt-get</code> command line program in Linux, 
         you may had used <code>apt-get install</code>, 
         <code>apt-get update</code> for managment your Linux software
         But how about in Windows? 
     </article>
-
     <article>
         <a href="https://chocolatey.org/">Choco</a> is a package manager for Windows 
         and it has similar functions compare to <code>apt-get</code>. 
-        It allows you to install, upgrade, configurate, and uninstall Windows software.
+        It allows you to install, upgrade, configure, and uninstall Windows software.
         For example, just simplly type <code>choco install PROGRAM_NAME</code> in command line,
         choco will automatelly install the program that you need.
     </article>
 
     <br/>
-    <h3>But I want my own Choco Server</h3>
-
+    <!-- But I want my own Choco Server -->
+    <h3 id="own_choco_server">But I want my own Choco Server</h3>
     <article>
-        if your company or your group requires deplying software fast, easy and secure,
-        you may meed to set up your own Choco Server. 
+        if your company or your group requires deploying software fast, easy and secure,
+        you may meet to set up your own Choco Server. 
         Then the following packages you would need:
     </article>
-
     <ul>
         <li><a href="https://github.com/chocolatey/choco">Souce code of chocolatey</li>
         <li><a href="https://bitbucket.org/aristar/jnuget/branch/default">Source code of jnuget</a></li>
@@ -40,23 +48,209 @@ category: c#
     </ul>
 
     <br/>
-    <h3>Understanding Choco's code</h3>
-
+    <!-- Understanding Choco's code -->
+    <h3 id="Understanding_Choco">Understanding Choco's code</h3>
     <article> 
         Using "choco install" command as example
         <br/><br/>
         The entry point of choco is function <code>private static void Main(string[] args)</code> which in file <u>src/chocolatey.console/Program.cs</u>.
+        <pre>
+            <code class="cs">
+public sealed class Program
+{
+    // ReSharper disable InconsistentNaming
+    private static void Main(string[] args)
+    // ReSharper restore InconsistentNaming
+    {
+        try
+        {
+            add_assembly_resolver();
+
+            string loggingLocation = ApplicationParameters.LoggingLocation;
+            //no file system at this point
+            if (!Directory.Exists(loggingLocation)) Directory.CreateDirectory(loggingLocation);
+
+            ......  
+            </code> 
+        </pre>
         After do some variables and directories checking, 
         the argument of command input will pass to <code>ConfigurationBuilder.set_up_configuration(args,config,container,license,warning => {warnings.Add(warning);});)</code></br>
         This function will parse argument,  configurate file path and set environment values.
-        <br/><br/>
+        <pre>
+            <code class="cs">
+public static void set_up_configuration(IList<string> args, ChocolateyConfiguration config, Container container, ChocolateyLicense license, Action<string> notifyWarnLoggingAction)
+{
+    var fileSystem = container.GetInstance<IFileSystem>();
+    var xmlService = container.GetInstance<IXmlService>();
+    var configFileSettings = get_config_file_settings(fileSystem, xmlService);
+    // must be done prior to setting the file configuration
+    add_or_remove_licensed_source(license, configFileSettings);
+    set_file_configuration(config, configFileSettings, fileSystem, notifyWarnLoggingAction);
+    ConfigurationOptions.reset_options();
+    set_global_options(args, config, container);
+    set_environment_options(config);
+    EnvironmentSettings.set_environment_variables(config);
+    // must be done last for overrides
+    set_licensed_options(config, license, configFileSettings);
+    // save all changes if there are any
+    set_config_file_settings(configFileSettings, xmlService, config);
+    set_hash_provider(config, container);
+}
+            </code> 
+        </pre>
+        Following, a run function which belong to <u>src\chocolatey\infrastructure.app\runners\ConsoleApplication.cs</u> will handle the input command
+        <pre>
+            <code class="cs">
+        ......
+        AssemblyFileExtractor.extract_all_resources_to_relative_directory(fileSystem, Assembly.GetAssembly(typeof(ChocolateyResourcesAssembly)), ApplicationParameters.InstallLocation, folders, ApplicationParameters.ChocolateyFileResources);
+
+        var application = new ConsoleApplication();
+        application.run(args, config, container);
+    }
+    catch (Exception ex)
+    {
+        if (ApplicationParameters.is_debug_mode_cli_primitive())
+        ......
+            </code>
+        </pre>
+        The next run function (<u>src\chocolatey\infrastructure.app\runners\GenericRunner.cs</u>) will be called and continue to execute the input command
+        <pre>
+            <code class="cs">
+        ......
+        commandArgs.Add(arg);
+    }
+
+    var runner = new GenericRunner();
+    runner.run(config, container, isConsole: true, parseArgs: command =>
+        {
+            ConfigurationOptions.parse_arguments_and_update_configuration(
+                commandArgs,
+                config,
+                ......
+            </code> 
+        </pre>
+        The seecond run function invokes <code>find_command(config, container, isConsole, parseArgs);</code>
+        and get an instance which ontains run(chocolatey.infrastructure.app.configuration.ChocolateyConfiguration configuration) 
+        <u>chocolatey/infrastructure.app/commands/ChocolateyInstallCommand.cs</u>. This run function is specifit for install command
+        Continuing the install command, get_script_for_action function will be called for determining which power shell script should be used.
+        <pre>
+            <code class="cs">
+private string get_script_for_action(PackageResult packageResult, CommandNameType command)
+{
+    var file = "chocolateyInstall.ps1";
+    switch (command)
+    {
+        case CommandNameType.uninstall:
+            file = "chocolateyUninstall.ps1";
+            break;
+
+        case CommandNameType.upgrade:
+            file = "chocolateyBeforeModify.ps1";
+            break;
+    }
+    ......
+            </code>
+        </pre>
         Another core file is <u>Nuget.Core</u>. <a href="https://www.nuget.org/">Nuget</a> is a Microsoft platform package manager. 
         Yes, Chocolatey is using <u>Nuget.Core</u> to connect packages source server to get and unzip .nupkg 
-        (In here, .nupkg is a package that contain .nuspec, point out specification of the software you want to install,
-         and powershell script for actual choco command).
         <br/><br/>
         The enviroument configuration file is <u>src/chocolatey/infrastructure.app/ApplicationParameters.cs</u>. 
         It points out where to store temprary file, whate kinds of files it should look, and where to log.
         <u>src/chocolatey/infrastructure.app/configuration/chocolatey.config</u> indicate the .nuget source server address.
+        <pre>
+            <code class="xml">
+        ......
+        &lt;add key="proxyUser" value="" /&gt;
+        &lt;add key="proxyPassword" value="" /&gt;
+    &lt;/config&gt;
+    &lt;sources&gt;
+        &lt;source id="chocolatey" value="https://chocolatey.org/api/v2/" /&gt;
+    &lt;/sources&gt;
+    &lt;features&gt;
+        &lt;feature name="checksumFiles" enabled="true" /&gt;
+        &lt;feature name="autoUninstaller" enabled="false" /&gt;
+        ......
+            </code>
+        </pre>
+
+    </article>
+    <br/>
+    <!-- What things are inside .nupkg< -->
+    <h3 id="inside_nupkg">What things are inside .nupkg</h3>
+    <article> 
+        In comment, .nupkg contains .nuspec (specification of the software you want to install),
+        and chocolateyInstall.ps1/chocolateyUninstall.ps1 (powershell script for actual choco command)
+        <br/>
+        <br/>
+        Let's look at .nuspec file. You can find more detail in <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec">.nuspec Reference</a>
+        This file is in xml format and requires 4 elements <code>&lt;id&gt;</code>, <code>&lt;version&gt;</code>, <code>&lt;description&gt;</code>, and <code>&lt;authors&gt;</code>
+        The following is a basic vlv.nuspec for VLC Media Player
+        <pre>
+            <code class="xml">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"&gt;
+    &lt;metadata&gt;
+        &lt;id&gt;vlc&lt;/id&gt;
+        &lt;version&gt;2.2.4.20161210&lt;/version&gt;
+        ......
+        &lt;authors&gt;VideoLAN Organization&lt;/authors&gt;
+        &lt;description&gt;
+            ......
+        &lt;/description&gt;
+        ......
+    &lt;/metadata&gt;
+&lt;/package&gt;
+            </code>
+        </pre>
+        Now switch to file chocolateyInstall.ps1. The core code is very simple. 
+        In <u>src\chocolatey\infrastructure.app\templates</u>, you will find our more detail of chocolateyInstall.ps1 
+        <pre>
+            <code class="ps1">
+$packageArgs = @{
+  packageName            = 'packagename'
+  fileType               = 'msi'
+  url                    = 'https://example.com/where.to.download.32bit.msi'
+  url64bit               = 'https://example.com/where.to.download.64bit.msi'
+  ......
+}
+Install-ChocolateyPackage @packageArgs
+            </code>
+        </pre>
+    </article>
+    <br/>
+    <!-- Two Important Files for jnuget -->
+    <h3 id="files_for_jnuget">Two Important Files for jnuget</h3>
+    <article>
+        jnuget is a JAVA Web Application which functioning as Nuget in JSP server.
+        In our case, jnuget is used for holding and managing our software.
+        There are <a href="https://bitbucket.org/aristar/jnuget/wiki/Home">two files</a> are very important to jnuget.
+        The first one is <u>jnuget.users.xml</u> for users setting up.
+        Another one is <u>jnuget.config.xml</u> which indicating your software holding directory.
+        <pre>
+            <code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;!-- jnuget.users.xml --&gt;
+&lt;users&gt;
+    &lt;user name="admin" password="1234"&gt;
+        &lt;role>jnuget-admin&lt;/role&gt;
+    &lt;/user&gt;
+&lt;/users&gt;
+            </code>
+        </pre>
+        <pre>
+            <code class="xml">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;!-- jnuget.config.xml --&gt;
+&lt;options&gt;
+    &lt;storages&gt;
+        &lt;storage class="ru.aristar.jnuget.sources.ClassicPackageSource" indexed="false" storageName="DefaultSource" public="true" canPush="true" canDelete="true"&gt;
+            &lt;properties&gt;
+                &lt;property name="folderName" value="${nuget.home}/Packages/"/&gt;
+            &lt;/properties&gt;
+        &lt;/storage&gt;
+    &lt;/storages&gt;
+&lt;/options&gt;
+            </code>
+        </pre>
     </article>
 <section>
