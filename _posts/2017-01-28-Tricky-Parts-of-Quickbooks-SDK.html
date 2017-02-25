@@ -1,0 +1,78 @@
+---
+layout: default
+title: Tricky Parts of QuickBooks SDK
+meta: "When using QuickBooks SDK for web application, there are many tricky parts like traps"
+date: 2017-01-28
+category: vb
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#file_open">QuickBooks Already Has a File Open</a></li>
+            <li><a href="#app_on_iis">QuickBooks SDK App on IIS</a></li>
+            <li><a href="#serve_remotely">Allow IIS Express Serves Remotely</a></li>
+        </ul>
+    </div>
+    <h3>Explanation of This Post</h3>
+    <article>
+        <strong class="text-primary">QuickBooks SDK App</srtong>: a web applicaition which using QuickBooks SDK functions can manipulate QuickBooks data.<br/>
+                &#09;&#09;The app only release in local area network.<br/>
+        <strong class="text-primary">QuickBooks Holding System</srtong>: QuickBooks is holding in Windows Server 2008 R2.<br/>
+                &#09;&#09;QuickBooks has multiple user accounts, Windows also.<br/>
+                &#09;&#09;any Windows user account can run QuickBooks with any QuickBooks user account.<br/>
+    </article>
+    <br/>
+    <!-- QuickBooks Already Has a File Open -->
+    <h3 id="file_open">QuickBooks Already Has a File Open</h3>
+    <article>
+        <strong>Scene 1.</strong> When I started to run Visual Studio to debug my code, 
+        an error windows popped up "QuickBooks already has a file open ......". 
+        Then I checked Task Manager, there was no QuickBooks under my Windows user account. 
+        I closed Visual Studio, opened it and ran debug again. Worked!
+        <br/><br/>
+        The only different is the first time Visual Studio under Administrator privilege, 
+        the second time under my user name. I tried many different user privileges as an experiment.
+        <br/><br/>
+        I found that if a QuickBooks SDK app running in Administrator, and other Windows users having QuickBooks open,
+        then quickbooks would consider "file open" although my user closed QuickBooks, 
+        except QuickBooks SDK app running in my Windows user account.
+        <br/><br/>
+        <strong>Scene 2.</strong> I assigned "qbUsr1" as QuickBooks user for QuickBooks SDK app when QuickBooks is not launched.
+        Some times, the familiar error box occurs while I execute the app.
+        <br/><br/>
+        I realized that if other Windows user login QuickBooks via "qbUsr1", and QuickBooks SDK app tried to connect,
+        QuickBooks will refuse the app connection.
+        <br/><br/>
+        <strong>Conclusion</strong>, when working on QuickBooks SDK app, make sure the QuickBooks SDK app user only for the app.
+        The app should not run under Administrator Windows user.
+    </article>
+
+    <br/>
+    <!-- QuickBooks SDK App on IIS -->
+    <h3 id="app_on_iis">QuickBooks SDK App on IIS</h3>
+    <article>
+        After I finished coding for QuickBooks SDK App, I pubished it to Internet Information Service (IIS). 
+        However, the app alway gave me error message "QuickBooks haven't started", but QuickBooks was already launched.
+        When I ran at Visual Studio with IIS Express, there was no problem.
+        <br/><br/>
+        I googled it and found out a <a href="http://stackoverflow.com/questions/27977822/connect-to-already-open-quickbooks-instance-via-qbxml">stackoverflow answer.
+        Base on the answer, I knew that QuickBooks program and IIS can not share the same Local Security Authority (LSA) session,
+        so that the app can not know QuickBooks is running. Reversely, IIS Express don't have LAS Session problem,
+        then the app executes properly.
+    </article>
+    <br/>
+    <!-- Understanding Choco's code -->
+    <h3 id="serve_remotely">Allow IIS Express Serves Remotely</h3>
+    <article> 
+        In order to let other users use the app, IIS Express should allow not only localhost connection but also other computers inside the local network.
+        To do that, <a href="https://www.iis.net/learn/extensions/introduction-to-iis-express/iis-express-overview">IIS Express</a> and 
+        <a href="https://www.microsoft.com/web/webmatrix/">WebMatrix</a> must be installed. 
+        There are other three <a href="https://blogs.iis.net/vaidyg/serving-external-traffic-with-webmatrix-beta">key points</a>. 
+        The first one is to configure HTTP.sys by running command <code>netsh http add urlacl url=http://YourHostName:yourPortNumber/ user=windowsUserName</code>
+        Reversely, running <code>netsh http delete urlacl url=http://YourHostName:yourPortNumber/<code> can remove wrong setting.
+        The other key point is to allow traffic through the host os firewall.
+        The final key point is to change the IIS Express url. 
+    </article>
+<section>
