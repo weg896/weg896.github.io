@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Tricky Parts of QuickBooks SDK
+title: Tricky Parts of QuickBooks SDK Development
 meta: "When using QuickBooks SDK for web application, there are many tricky parts like traps"
 date: 2017-01-28
 category: vb
@@ -17,9 +17,9 @@ category: vb
     </div>
     <h3>Explanation of This Post</h3>
     <article>
-        <strong class="text-primary">QuickBooks SDK App</srtong>: a web applicaition which using QuickBooks SDK functions can manipulate QuickBooks data.<br/>
+        <strong class="text-warning">QuickBooks SDK App</strong>: a web applicaition which using QuickBooks SDK functions can manipulate QuickBooks data.<br/>
                 &#09;&#09;The app only release in local area network.<br/>
-        <strong class="text-primary">QuickBooks Holding System</srtong>: QuickBooks is holding in Windows Server 2008 R2.<br/>
+        <strong class="text-warning">QuickBooks Holding System</strong>: QuickBooks is holding in Windows Server 2008 R2.<br/>
                 &#09;&#09;QuickBooks has multiple user accounts, Windows also.<br/>
                 &#09;&#09;any Windows user account can run QuickBooks with any QuickBooks user account.<br/>
     </article>
@@ -57,7 +57,7 @@ category: vb
         However, the app alway gave me error message "QuickBooks haven't started", but QuickBooks was already launched.
         When I ran at Visual Studio with IIS Express, there was no problem.
         <br/><br/>
-        I googled it and found out a <a href="http://stackoverflow.com/questions/27977822/connect-to-already-open-quickbooks-instance-via-qbxml">stackoverflow answer.
+        I googled it and found out a <a href="http://stackoverflow.com/questions/27977822/connect-to-already-open-quickbooks-instance-via-qbxml">stackoverflow answer</a>.
         Base on the answer, I knew that QuickBooks program and IIS can not share the same Local Security Authority (LSA) session,
         so that the app can not know QuickBooks is running. Reversely, IIS Express don't have LAS Session problem,
         then the app executes properly.
@@ -71,7 +71,7 @@ category: vb
         <a href="https://www.microsoft.com/web/webmatrix/">WebMatrix</a> must be installed. 
         There are other three <a href="https://blogs.iis.net/vaidyg/serving-external-traffic-with-webmatrix-beta">key points</a>. 
         The first one is to configure HTTP.sys by running command <code>netsh http add urlacl url=http://YourHostName:yourPortNumber/ user=windowsUserName</code>
-        Reversely, running <code>netsh http delete urlacl url=http://YourHostName:yourPortNumber/<code> can remove wrong setting.
+        Reversely, running <code>netsh http delete urlacl url=http://YourHostName:yourPortNumber/</code> can remove wrong setting.
         The other key point is to allow traffic through the host os firewall.
         The final key point is to change the IIS Express url. 
     </article>

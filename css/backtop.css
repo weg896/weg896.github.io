@@ -1,0 +1,38 @@
+
+.cd-top {
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  /* image replacement properties */
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(241, 113, 83, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 15%;
+  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+  -moz-transition: opacity .3s 0s, visibility 0s .3s;
+  transition: opacity .3s 0s, visibility 0s .3s;
+}
+.cd-top.cd-is-visible, .cd-top:hover {
+  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+  -moz-transition: opacity .3s 0s, visibility 0s 0s;
+  transition: opacity .3s 0s, visibility 0s 0s;
+}
+.cd-top.cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
+}
+
+.cd-top:hover {
+  background-color: rgb(241, 113, 83);
+  opacity: 1;
+}
+.cd-top i{
+  margin:5px;
+  color:white;
+}
