@@ -13,6 +13,7 @@ category: vb
             <li><a href="#file_open">QuickBooks Already Has a File Open</a></li>
             <li><a href="#app_on_iis">QuickBooks SDK App on IIS</a></li>
             <li><a href="#serve_remotely">Allow IIS Express Serves Remotely</a></li>
+            <li><a href="#references">References</a></li>
         </ul>
     </div>
     <h3>Explanation of This Post</h3>
@@ -74,5 +75,15 @@ category: vb
         Reversely, running <code>netsh http delete urlacl url=http://YourHostName:yourPortNumber/</code> can remove wrong setting.
         The other key point is to allow traffic through the host os firewall.
         The final key point is to change the IIS Express url. 
+    </article>
+    <br/>
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="http://stackoverflow.com/questions/27977822/connect-to-already-open-quickbooks-instance-via-qbxml">Connect to already open Quickbooks instance via QBXML</a></li>
+            <li><a href="https://www.iis.net/learn/extensions/introduction-to-iis-express/iis-express-overview">IIS Express Overview</a></li>
+            <li><a href="https://www.microsoft.com/web/webmatrix/">WebMatrix</a></li>
+            <li><a href="https://blogs.iis.net/vaidyg/serving-external-traffic-with-webmatrix-beta">Serving external traffic with WebMatrix Beta</a></li>
+        </ol>
     </article>
 <section>
