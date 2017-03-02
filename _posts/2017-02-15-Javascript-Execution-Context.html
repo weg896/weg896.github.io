@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Javascript Execution Context
-meta: "Javascript Execution Context"
+meta: "Javascript Execution Context Deep Learning"
 date: 2017-02-15
 category: javascript
 ---
@@ -12,14 +12,14 @@ category: javascript
         <ul>
             <li><a href="#intersting_code">Interesting Code</a></li>
             <li><a href="#what_is_execution_context">What Is Execution Context</a></li>
+            <li><a href="#execution_context_does">What Will Be Done Inside An Execution Context</a></li>
             <li><a href="#references">References</a></li>
         </ul>
     </div>
-    <br/>
     <h3 id="intersting_code">Interesting Code</h3>
     <article>
         When I worked on <a href="http://davidshariff.com/quiz/">David Shariff's Front End Web Development Quiz</a>, 
-        I found a very intersting question, and I created a piece of code which very similar to the interesting question.
+        I found a very interesting question, and I created a piece of code which very similar to the question.
         <pre>
             <code class="js">
     ......
@@ -32,37 +32,96 @@ category: javascript
         var z = function bar(){}
         var x = 1;
         this.x = "foo";
-
     }
     ......
     console.log(foo(12));
             </code>
         </pre>
         I assumed foo() function would return <span class="text-warning">undefined</span> before I ran the code, but I am wrong.
-        it return <span class="text-warning">function x(){return y;}</span>. Why? The answer will come to this topic.
+        it returns <span class="text-warning">function x(){return y;}</span>. Why? The answer will come to this topic.
+        In this topic, I will get references from ECMAScript since Javascript has been standardized in the ECMAScript language specification.
     </article>
     <br/>
     <h3 id="what_is_execution_context">What Is Execution Context</h3>
     <article>
-        Before talk about execution context, let's discuss executable code. executable code has three type: 
-        <b>Global Code</b> (code that is )
-        <b>Eval Code</b> ()
+        Before talk about execution context, let's discuss executable code. executable code has four types:
+        <ul> 
+        <li><b class="text-warning">Global Code</b> is code in <code>.js</code> file or inside <code>&lt;script&gt;&lt;/script&gt;</code> but not include function bodies.</li>
+        <li><b class="text-warning">Function Code</b> is code inside functions, excluding inner functions.</li>
+        <li><b class="text-warning">Eval Code</b> is code called by <code>eval()</code>.</li>
+        <li><b class="text-warning">Module Code</b> is code that is provided as a ModuleBody</li>
+        </ul>
         <blockquote class="blockquote">
             <p class="mb-0">
-            When control is transferred to ECMAScript <i>executable code</i>, control is entering an <i>execution context</i>. 
-            Active <i>execution contexts</i> logically form a stack. 
-            The top <i>execution context</i> on this logical stack is the running <i>execution context</i>. 
-            A new <i>execution context</i> is created whenever control is transferred from the <i>executable code</i> associated with the currently running <i>execution context</i> to <i>executable code</i> that is not associated with that <i>execution context</i>. 
-            The newly created <i>execution context</i> is pushed onto the stack and becomes the running <i>execution context</i>.
+                An execution context is a specification device that is used to track the runtime evaluation of code by an ECMAScript implementation. 
+                At any point in time, there is at most one execution context that is actually executing code. This is known as the running execution context.
+                <br/>
+                <br/>
+                The execution context stack is used to track execution contexts. 
+                The running execution context is always the top element of this stack. 
+                A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context. 
+                The newly created execution context is pushed onto the stack and becomes the running execution context.
             </p>
-            <footer class="blockquote-footer">Part 10.3 Execution Contexts <cite>Standard ECMA-262,ECMAScript® Language Specification</cite></footer>
+            <footer class="blockquote-footer">
+                <a href="http://www.ecma-international.org/ecma-262/7.0/index.html#sec-execution-contexts">
+                    Part 8.3 Execution Contexts, <cite>Standard ECMA-262 7th Edition ECMAScript® 2016 Language Specification</cite>
+                </a>    
+            </footer>
         </blockquote>
+        To illustrate the upper block of quote, let's dig into follow code
+        <pre>
+            <code class="js">
+    function a(){
+        b();
+    }
+
+    function b(){
+        console.log("I am here");
+    }
+
+    a();
+            </code>
+        </pre>
+        <code>Global Execution Context</code> is default context to enter when a browser first loads script code, it only one and alway at the bottom of a stack. 
+        As the upper code show, it enter the Global Execution Context first then create an execution context for function <code>a()</code>; 
+        function <code>a()</code> calls function <code>b()</code> with new execution context. 
+        <div class="row">
+            <figure class="figure">
+                <img src="{{site:url}}/img/post/context_stack.svg" class="figure-img img-fluid rounded" alt="execution context stack"/>
+                <figcaption class="figure-caption text-right">fig 1. execution context stack</figcaption>
+            </figure>
+        </div>
+    </article>
+    <br/>
+    <h3 id="execution_context_does">What Will Be Done Inside An Execution Context</h3>
+    <article>  
+        Now we know what is execution context, so what will be done inside an execution context. For a new execution context, there are 2 stages:
+        <ul>
+            <li><b class="text-warning">Creation Stage</b> is a stage which deals with Scope Chain, function, variable, argument and this pointer.</li>
+            <li><b class="text-warning">Code Execution Stage</b> is a stage to run code.</li>
+        </ul>
+        Come back to the code that we discuss above code why the result is <span class="text-warning">function x(){return y;}</span>. 
+        To illustrate details of the execution context stages, I built a flowing chart.
+        <div class="row">
+            <figure class="figure">
+                <img src="{{site:url}}/img/post/execute_context.svg" class="figure-img img-fluid rounded" alt="execution context flowing chart"/>
+                <figcaption class="figure-caption text-right">fig 2. execution context flowing chart</figcaption>
+            </figure>
+        </div>
+        We can see that after the <span class="text-danger">Createion Stage</span>, x is signed the reference address of <span class="text-warning">function x(){return y;}</span>.
+        Other local variables are assigned <span class="text-warning">undefined</span>
+        When the function comes to the <span class="text-danger">Code Execution Stage</span>, it just returns <span class="text-warning">function x(){return y;}</span>.
+        This is the reason why 
     </article>
     <br/>
     <h3 id="references">References</h3>
     <article>
         <ol>
-
+            <li><a href="http://davidshariff.com/quiz/">David Shariff's Front End Web Development Quiz</a></li>
+            <li><a href="http://davidshariff.com/blog/what-is-the-execution-context-in-javascript/">What is the Execution Context & Stack in JavaScript?</a></li>
+            <li><a href="http://www.ecma-international.org/ecma-262/7.0/index.html">Standard ECMA-262 7th Edition, ECMAScript® 2016 Language Specification</a></li>
+            <li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/">ECMA-262-3 in detail. Chapter 1. Execution Contexts.</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript in Wikipedia</a></li>
         </ol>
     </article>
 <section>

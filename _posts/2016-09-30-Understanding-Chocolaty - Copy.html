@@ -23,8 +23,8 @@ category: c#
     <article>
         If you are familiar with <code>apt-get</code> command line program in Linux, 
         you may had used <code>apt-get install</code>, 
-        <code>apt-get update</code> for managment your Linux software
-        But how about in Windows? 
+        <code>apt-get update</code> for managment your Linux software, 
+        but how about in Windows? 
     </article>
     <article>
         <a href="https://chocolatey.org/">Choco</a> is a package manager for Windows 
@@ -39,7 +39,7 @@ category: c#
     <h3 id="own_choco_server">But I want my own Choco Server</h3>
     <article>
         if your company or your group requires deploying software fast, easy and secure,
-        you may meet to set up your own Choco Server. 
+        you may neet to set up your own Choco Server. 
         Then the following packages you would need:
     </article>
     <ul>
@@ -76,7 +76,7 @@ public sealed class Program
         </pre>
         After do some variables and directories checking, 
         the argument of command input will pass to <code>ConfigurationBuilder.set_up_configuration(args,config,container,license,warning => {warnings.Add(warning);});)</code></br>
-        This function will parse argument,  configurate file path and set environment values.
+        This function will parse argument, configurate file path and set environment values.
         <pre>
             <code class="cs">
 public static void set_up_configuration(IList<string> args, ChocolateyConfiguration config, Container container, ChocolateyLicense license, Action<string> notifyWarnLoggingAction)
@@ -99,7 +99,7 @@ public static void set_up_configuration(IList<string> args, ChocolateyConfigurat
 }
             </code> 
         </pre>
-        Following, a run function which belong to <u>src\chocolatey\infrastructure.app\runners\ConsoleApplication.cs</u> will handle the input command
+        Following, a run() function which belong to <u>src\chocolatey\infrastructure.app\runners\ConsoleApplication.cs</u> will handle the input command
         <pre>
             <code class="cs">
         ......
@@ -114,7 +114,7 @@ public static void set_up_configuration(IList<string> args, ChocolateyConfigurat
         ......
             </code>
         </pre>
-        The next run function (<u>src\chocolatey\infrastructure.app\runners\GenericRunner.cs</u>) will be called and continue to execute the input command
+        The next run() function (<u>src\chocolatey\infrastructure.app\runners\GenericRunner.cs</u>) will be called and continue to execute the input command
         <pre>
             <code class="cs">
         ......
@@ -130,10 +130,10 @@ public static void set_up_configuration(IList<string> args, ChocolateyConfigurat
                 ......
             </code> 
         </pre>
-        The seecond run function invokes <code>find_command(config, container, isConsole, parseArgs);</code>
-        and get an instance which ontains run(chocolatey.infrastructure.app.configuration.ChocolateyConfiguration configuration) 
-        <u>chocolatey/infrastructure.app/commands/ChocolateyInstallCommand.cs</u>. This run function is specifit for install command
-        Continuing the install command, get_script_for_action function will be called for determining which power shell script should be used.
+        The seecond run() function invokes <code>find_command(config, container, isConsole, parseArgs);</code>
+        and gets an instance which ontains run(chocolatey.infrastructure.app.configuration.ChocolateyConfiguration configuration) 
+        <u>chocolatey/infrastructure.app/commands/ChocolateyInstallCommand.cs</u>. This run() function is specifit for install command
+        Continuing the install command, get_script_for_action() function will be called for determining which power shell script should be used.
         <pre>
             <code class="cs">
 private string get_script_for_action(PackageResult packageResult, CommandNameType command)

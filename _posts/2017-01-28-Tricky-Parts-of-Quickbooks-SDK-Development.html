@@ -22,7 +22,7 @@ category: vb
                 &#09;&#09;The app only release in local area network.<br/>
         <strong class="text-warning">QuickBooks Holding System</strong>: QuickBooks is holding in Windows Server 2008 R2.<br/>
                 &#09;&#09;QuickBooks has multiple user accounts, Windows also.<br/>
-                &#09;&#09;any Windows user account can run QuickBooks with any QuickBooks user account.<br/>
+                &#09;&#09;Any Windows user account can run QuickBooks with any QuickBooks user account.<br/>
     </article>
     <br/>
     <!-- QuickBooks Already Has a File Open -->
@@ -31,23 +31,23 @@ category: vb
         <strong>Scene 1.</strong> When I started to run Visual Studio to debug my code, 
         an error windows popped up "QuickBooks already has a file open ......". 
         Then I checked Task Manager, there was no QuickBooks under my Windows user account. 
-        I closed Visual Studio, opened it and ran debug again. Worked!
+        I closed Visual Studio, reopened it and ran debug again. Worked!
         <br/><br/>
         The only different is the first time Visual Studio under Administrator privilege, 
         the second time under my user name. I tried many different user privileges as an experiment.
         <br/><br/>
         I found that if a QuickBooks SDK app running in Administrator, and other Windows users having QuickBooks open,
-        then quickbooks would consider "file open" although my user closed QuickBooks, 
+        then quickbooks would consider "file open" although QuickBooks is closed under my Windows user account, 
         except QuickBooks SDK app running in my Windows user account.
         <br/><br/>
         <strong>Scene 2.</strong> I assigned "qbUsr1" as QuickBooks user for QuickBooks SDK app when QuickBooks is not launched.
         Some times, the familiar error box occurs while I execute the app.
         <br/><br/>
         I realized that if other Windows user login QuickBooks via "qbUsr1", and QuickBooks SDK app tried to connect,
-        QuickBooks will refuse the app connection.
+        QuickBooks will refuse the connection of QuickBooks SDK app.
         <br/><br/>
-        <strong>Conclusion</strong>, when working on QuickBooks SDK app, make sure the QuickBooks SDK app user only for the app.
-        The app should not run under Administrator Windows user.
+        <strong>Conclusion</strong>, when working on QuickBooks SDK app, make sure the QuickBooks SDK app user only for the app, 
+        and the app should not run under Windows Administrator.
     </article>
 
     <br/>
@@ -60,7 +60,7 @@ category: vb
         <br/><br/>
         I googled it and found out a <a href="http://stackoverflow.com/questions/27977822/connect-to-already-open-quickbooks-instance-via-qbxml">stackoverflow answer</a>.
         Base on the answer, I knew that QuickBooks program and IIS can not share the same Local Security Authority (LSA) session,
-        so that the app can not know QuickBooks is running. Reversely, IIS Express don't have LAS Session problem,
+        so that the app can not know QuickBooks is running. However, IIS Express don't have LAS Session problem,
         then the app executes properly.
     </article>
     <br/>
