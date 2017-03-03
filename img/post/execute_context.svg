@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.9899495"
-     inkscape:cx="542.14726"
-     inkscape:cy="400.53695"
+     inkscape:cx="681.38731"
+     inkscape:cy="303.87294"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,12 +56,20 @@
      id="layer1"
      transform="translate(0,-98.562288)">
     <rect
+       style="fill:#ffeeaa;stroke-width:0.26244739"
+       id="rect117"
+       width="97.286118"
+       height="94.346138"
+       x="55.592064"
+       y="156.14876"
+       ry="5.8799295" />
+    <rect
        id="rect3682"
        width="62.102291"
        height="25.335119"
        x="168.05757"
        y="113.16039"
-       style="fill:#ff8080;stroke-width:0.25691637"
+       style="fill:#ffaaaa;stroke-width:0.25691637"
        transform="matrix(1,0,0.00983495,0.99995164,0,0)" />
     <text
        xml:space="preserve"
@@ -82,7 +90,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />
     <rect
-       style="fill:#ffe680;stroke-width:0.2360044"
+       style="fill:#ffd5d5;stroke-width:0.2360044"
        id="rect3788"
        width="57.667465"
        height="6.778439"
@@ -102,28 +110,28 @@
          y="120.94533"
          style="font-size:4.14683104px;fill:#000000;stroke-width:0.22215162">execution context foo()</tspan></text>
     <ellipse
-       style="fill:#ffcc00;stroke-width:0.22215162"
+       style="fill:#ffd5d5;stroke-width:0.22215162"
        id="path3796"
        cx="200.17952"
        cy="123.16081"
        rx="0.84971702"
        ry="0.72229272" />
     <ellipse
-       style="fill:#ffcc00;stroke-width:0.22215162"
+       style="fill:#ffd5d5;stroke-width:0.22215162"
        id="path3796-1"
        cx="200.18925"
        cy="125.18958"
        rx="0.84971702"
        ry="0.72229272" />
     <ellipse
-       style="fill:#ffcc00;stroke-width:0.22215162"
+       style="fill:#ffd5d5;stroke-width:0.22215162"
        id="path3796-4"
        cx="200.20302"
        cy="127.24139"
        rx="0.84971702"
        ry="0.72229272" />
     <rect
-       style="fill:#ffe680;stroke-width:0.2360044"
+       style="fill:#ffd5d5;stroke-width:0.2360044"
        id="rect3788-0"
        width="57.667465"
        height="6.778439"
@@ -157,8 +165,8 @@
        id="rect3682-6"
        width="54.683372"
        height="6.6048169"
-       x="63.649227"
-       y="147.59587"
+       x="63.684406"
+       y="146.53694"
        style="fill:#ffeeaa;stroke-width:0.12309332"
        transform="matrix(1,0,0.03321865,0.99944811,0,0)"
        ry="1.5341855" />
@@ -166,23 +174,14 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.45780754px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.23644517"
        x="72.988564"
-       y="151.8671"
+       y="150.81436"
        id="text3890"
        transform="scale(0.99470231,1.0053259)"><tspan
          sodipodi:role="line"
          id="tspan3888"
          x="72.988564"
-         y="151.8671"
+         y="150.81436"
          style="font-size:4.41364384px;stroke-width:0.23644517">initialize Scope Chain</tspan></text>
-    <rect
-       id="rect3682-6-7"
-       width="54.683372"
-       height="6.6048169"
-       x="63.691402"
-       y="157.05472"
-       style="fill:#ffeeaa;stroke-width:0.12309332"
-       transform="matrix(1,0,0.03321865,0.99944811,0,0)"
-       ry="1.5341855" />
     <rect
        id="rect3682-6-6"
        width="56.816944"
@@ -347,7 +346,7 @@
        height="17.786684"
        x="65.571617"
        y="166.35213"
-       style="fill:#ffeeaa;stroke-width:0.20749827"
+       style="fill:#fff6d5;stroke-width:0.20749827"
        transform="matrix(1,0,0.01301588,0.99991529,0,0)"
        ry="4.1315408" />
     <text
@@ -384,7 +383,7 @@
        height="29.414677"
        x="55.064804"
        y="186.72789"
-       style="fill:#ffeeaa;stroke-width:0.3369796"
+       style="fill:#fff6d5;stroke-width:0.3369796"
        transform="matrix(1,0,0.01255203,0.99992122,0,0)"
        ry="6.8325243" />
     <text
@@ -421,7 +420,7 @@
          id="tspan4271">replace reference</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.23644517px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 124.13777,151.64311 52.02442,11.09468 -2.40617,-2.13395"
+       d="m 124.70552,149.65794 51.45667,13.07985 -2.40617,-2.13395"
        id="path4285"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
@@ -485,7 +484,7 @@
        height="29.414677"
        x="54.41806"
        y="218.45059"
-       style="fill:#ffeeaa;stroke-width:0.3369796"
+       style="fill:#fff6d5;stroke-width:0.3369796"
        transform="matrix(1,0,0.01255203,0.99992122,0,0)"
        ry="6.8325243" />
     <text
@@ -533,7 +532,7 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:#b3b3b3;stroke:#000000;stroke-width:0.20928586px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 95.941304,260.61571 5.140026,0.008 -1.354657,6.13522 3.835857,-0.17477 -5.006443,4.18643 -5.153253,-4.16939 3.85486,0.16341 z"
+       d="m 95.941304,261.67405 5.140026,0.008 -1.354657,6.13522 3.835857,-0.17477 -5.006443,4.18643 -5.153253,-4.16939 3.85486,0.16341 z"
        id="path3786-9-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />
@@ -541,8 +540,8 @@
        id="rect3682-6-7-0-3-1"
        width="95.577644"
        height="13.089969"
-       x="44.831722"
-       y="272.26862"
+       x="44.816212"
+       y="272.798"
        style="fill:#ffeeaa;stroke-width:0.22909941"
        transform="matrix(1,0,0.02929583,0.99957079,0,0)"
        ry="3.0405748" />
@@ -550,25 +549,25 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.23644517"
        x="56.367214"
-       y="275.34296"
+       y="275.86932"
        id="text3890-0-2-5-9"
        transform="scale(0.99470231,1.0053259)"><tspan
          sodipodi:role="line"
          x="56.367214"
-         y="275.34296"
+         y="275.86932"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.23644517"
          id="tspan4271-0-2">execute function line by line,</tspan><tspan
          sodipodi:role="line"
          x="56.367214"
-         y="280.86002"
+         y="281.38638"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.23644517"
          id="tspan4446">variables are assigned value in this stage</tspan></text>
     <rect
        id="rect3682-6-9"
        width="54.683372"
        height="6.6048169"
-       x="62.427357"
-       y="250.88641"
+       x="62.374588"
+       y="252.47481"
        style="fill:#ffeeaa;stroke-width:0.12309332"
        transform="matrix(1,0,0.03321865,0.99944811,0,0)"
        ry="1.5341855" />
@@ -576,13 +575,13 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.45780754px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.23644517"
        x="75.209587"
-       y="254.55368"
+       y="256.13278"
        id="text3890-15"
        transform="scale(0.99470231,1.0053259)"><tspan
          sodipodi:role="line"
          id="tspan3888-2"
          x="75.209587"
-         y="254.55368"
+         y="256.13278"
          style="font-size:4.41364384px;stroke-width:0.23644517">Determin 'this' value</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.23644517px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -640,7 +639,7 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.19055261px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 51.988844,278.76651 H 41.405175"
+       d="M 51.988844,279.29568 H 41.405175"
        id="path113"
        inkscape:connector-curvature="0" />
     <rect
@@ -649,19 +648,19 @@
        width="37.233074"
        height="8.1051359"
        x="3.5700388"
-       y="274.84967"
+       y="275.37885"
        ry="4.052568" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.45780754px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.23644517"
        x="5.7246046"
-       y="278.69205"
+       y="279.21841"
        id="text4483-5"
        transform="scale(0.99470231,1.0053259)"><tspan
          sodipodi:role="line"
          id="tspan4481-7"
          x="5.7246046"
-         y="278.69205"
+         y="279.21841"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.23644517">Activisio Stage</tspan></text>
   </g>
 </svg>
