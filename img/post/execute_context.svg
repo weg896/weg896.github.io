@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9899495"
-     inkscape:cx="681.38731"
-     inkscape:cy="303.87294"
+     inkscape:zoom="1.979899"
+     inkscape:cx="172.22845"
+     inkscape:cy="81.675003"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -66,11 +66,11 @@
     <rect
        id="rect3682"
        width="62.102291"
-       height="25.335119"
-       x="168.05757"
-       y="113.16039"
-       style="fill:#ffaaaa;stroke-width:0.25691637"
-       transform="matrix(1,0,0.00983495,0.99995164,0,0)" />
+       height="19.722809"
+       x="167.74083"
+       y="113.16395"
+       style="fill:#ffaaaa;stroke-width:0.22668077"
+       transform="matrix(1,0,0.01263358,0.99992019,0,0)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.12784243px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17819606"
@@ -95,60 +95,39 @@
        width="57.667465"
        height="6.778439"
        x="171.2795"
-       y="114.89008"
+       y="115.41925"
        ry="3.3336587" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.73923492px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22215162"
        x="173.55562"
-       y="120.94533"
+       y="121.47963"
        id="text3794"
        transform="scale(1.0097331,0.99036072)"><tspan
          sodipodi:role="line"
          id="tspan3792"
          x="173.55562"
-         y="120.94533"
+         y="121.47963"
          style="font-size:4.14683104px;fill:#000000;stroke-width:0.22215162">execution context foo()</tspan></text>
-    <ellipse
-       style="fill:#ffd5d5;stroke-width:0.22215162"
-       id="path3796"
-       cx="200.17952"
-       cy="123.16081"
-       rx="0.84971702"
-       ry="0.72229272" />
-    <ellipse
-       style="fill:#ffd5d5;stroke-width:0.22215162"
-       id="path3796-1"
-       cx="200.18925"
-       cy="125.18958"
-       rx="0.84971702"
-       ry="0.72229272" />
-    <ellipse
-       style="fill:#ffd5d5;stroke-width:0.22215162"
-       id="path3796-4"
-       cx="200.20302"
-       cy="127.24139"
-       rx="0.84971702"
-       ry="0.72229272" />
     <rect
        style="fill:#ffd5d5;stroke-width:0.2360044"
        id="rect3788-0"
        width="57.667465"
        height="6.778439"
        x="171.11407"
-       y="129.1693"
+       y="123.87766"
        ry="3.3336582" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.88606548px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22215162"
        x="182.41969"
-       y="134.85855"
+       y="129.51538"
        id="text3836"
        transform="scale(1.0097331,0.99036072)"><tspan
          sodipodi:role="line"
          id="tspan3834"
          x="182.41969"
-         y="134.85855"
+         y="129.51538"
          style="font-size:4.14683104px;fill:#000000;stroke-width:0.22215162">global context </tspan></text>
     <text
        xml:space="preserve"
@@ -643,9 +622,9 @@
        id="path113"
        inkscape:connector-curvature="0" />
     <rect
-       style="fill:#ffaaaa;stroke-width:0.17610614"
+       style="fill:#ffaaaa;stroke-width:0.17892785"
        id="rect4479-1"
-       width="37.233074"
+       width="38.435787"
        height="8.1051359"
        x="3.5700388"
        y="275.37885"
@@ -661,6 +640,6 @@
          id="tspan4481-7"
          x="5.7246046"
          y="279.21841"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.23644517">Activisio Stage</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.41364384px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.23644517">Activision Stage</tspan></text>
   </g>
 </svg>

@@ -1,0 +1,399 @@
+---
+layout: default
+title: Javascript This Keyword
+meta: "Javascript 'this' keyword so confuse to developers, 
+    this post will discuss how to distingush 'this' in easy way."
+date: 2017-03-13
+category: javascript
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#data_types_javascript">Data Types In Javascript</a></li>
+            <li><a href="#reference_types_calls_function">Reference Types Calls Function</a></li>
+            <li><a href="#calling_function_with_grouping_operator">Calling Function With Grouping Operator</a></li>
+            <li><a href="#inner_function">This In Inner Function</a></li>
+            <li><a href="#object_constructing">This in Object Constructing</a></li>
+            <li><a href="#binding_this">Binding This With Objects</a></li>
+            <li><a href="#references">References</a></li>
+        </ul>
+    </div>
+    <h3 id="data_types_javascript">Data Tyoes In Javascript</h3>
+    <article>
+        In javascript, there are two data types in javascript, Primitive Types and Reference Types.
+        Let see the primitive types first. Primitive types are data that are not an object and has no methods, and they are immutable.
+        <code>number</code>, <code>null</code>, <code>boolean</code>, <code>string</code>, <code>undefined</code>, and <code>symbol</code> are primitive types.
+        <pre>
+            <code class="js">
+    'use strict';
+    // here are all Primitive Types
+    var a = 123; 
+    var b = 45.6;
+    var c = NaN;
+    var d = true; 
+    var e = "this is string";
+    var f = 'this is another string';
+    var g = undefined; 
+    var h = null;
+    var i = Symbol("foo");
+            </code>
+        </pre>
+        How about Reference Types. Reference Types are different from Primitive Types; they are mutable, no fixed size.
+        <pre>
+            <code class="js">
+    'use strict';
+    // here are all Reference Types
+    var a = {}; 
+    var b = new Object();
+    var c = [0,1];
+    var d = new Array; 
+    var e = new String('this is string');
+    var f = function(){return true};
+    var g = new Function('return false'); 
+
+    // these are mutable
+    function foo(){
+        console.log("I am function");
+    }
+    var bar = "I am string"
+
+    a.foo = foo;            a.bar = bar;
+    b.foo = foo;            b.bar = bar;
+    c.foo = foo;            c.bar = bar;
+    d.foo = foo;            d.bar = bar;
+    e.foo = foo;            e.bar = bar;
+    f.foo = foo;            f.bar = bar;
+    g.foo = foo;            g.bar = bar;
+    
+    // output should be "I am string" and "I am function" for all line
+    console.log(a.bar);     a.foo();
+    console.log(b.bar);     b.foo();
+    console.log(c.bar);     c.foo();
+    console.log(d.bar);     d.foo();
+    console.log(e.bar);     e.foo();
+    console.log(f.bar);     f.foo();
+    console.log(g.bar);     g.foo();
+            </code>
+        </pre>
+    </article>
+    <br/>
+    <h3 id="reference_types_calls_function">Reference Types Calls Function</h3>
+    <article>
+        If there is reference type calls function, and inside the function (not its inner function) contain <span class="text-primary">this</span> keyword.
+        Then <span class="text-primary">this</span> keyword will reference to the who invokes the function.
+        <pre>
+            <code class="js">
+    'use strict';  
+    function foo(para){
+        console.log(this === para);
+    }
+
+    foo(undefined); // window/global; it is similar to window/global.foo(); if in strict mode, undefined
+
+    var obj = new Object();
+    obj.foo = foo;
+    obj.foo(obj); // obj; obj invokes foo();
+
+    var obj_2 = obj.foo;
+    obj_2(undefined); // window/global; it is similar to window/global.obj_2(); if in strict mode, undefined
+    
+    console.log(foo === foo.prototype.constructor); // true;
+    foo.prototype.constructor(foo.prototype); // foo.prototype invokes constructor()
+            </code>
+        </pre>
+        For this part, a better way to figure out <span class="text-primary">this</span> keyword is using the following image.
+        <figure class="figure">
+            <img src="{{site:url}}/img/post/this_keyword.svg" class="figure-img img-fluid rounded" alt="this keyword illustration"/>
+            <figcaption class="figure-caption text-right">fig 1. easy way to figure out "this" keyword</figcaption>
+        </figure>
+    </article>
+    <br/>
+    <h3 id="calling_function_with_grouping_operator">Calling Function With Grouping Operator</h3>
+    <article>
+        There is a little bit tricky when using grouping operator <code>()</code> such as invoking a function by using closure.
+        <a href="http://dmitrysoshnikov.com/ecmascript/chapter-3-this/">Dmitry Soshnikov's post</a> gives a good example,
+        And I will show my mix example below.
+        <pre>
+            <code class="js">
+    "use strict";
+    (function (){
+        console.log(this === undefined) // window/global; if in strict mode, undefined
+    })();
+
+    var closure_1 = (function (para){
+        console.log(this === para)
+    }).prototype;
+
+    closure_1.constructor(closure_1); // true
+
+    var foo = {
+        bar: function (para) {
+            console.log(this === para);
+        }
+    };
+    
+    // also is a good example for "This In Inner Function"
+    var foo2 = {
+        bar: function (para) {
+            console.log(this === para);
+            return function(para2){ 
+                console.log(this === para2);
+            }
+        }
+    };
+
+    // also is a good example for "This In Inner Function"
+    var foo3 = {
+        bar: function (para) {
+            console.log(this === para);
+            return {
+                func:function(){
+                    console.log(this);
+                }
+            }
+        }
+    };
+
+    var foo4 = {
+		bar:{}
+	}
+    foo4.bar.com = foo.bar;
+
+    foo.bar(foo); // 'this' points to foo, obvious
+    (foo.bar)(foo); // 'this' points to foo too, errrrrr
+
+    foo2.bar(foo2)(undefined); //foo2, window/global; if in strict mode, undefined
+    (foo2.bar(foo2))(undefined); //foo2, window/global; if in strict mode, undefined
+
+    foo3.bar(foo3).func(); //foo3, object of {func:......};
+    (foo3.bar(foo3)).func(); //foo3, object of {func:......};
+    (foo3.bar(foo3).func)(); //foo3, object of {func:......};
+
+    foo4.bar.com(foo4.bar); // 'this' points to foo4.bar, no doubt
+    (foo4.bar.com)(foo4.bar); // 'this' points to foo4.bar, errrrrr
+    
+    (foo.bar = foo.bar)(undefined); // window/global; if in strict mode, undefined
+    (false || foo.bar)(undefined); // window/global; if in strict mode, undefined
+    (true &amp;&amp; foo.bar)(undefined); // window/global; if in strict mode, undefined
+    (foo.bar, foo.bar)(undefined); // window/global; if in strict mode, undefined
+            </code>
+        </pre>
+        In Dmitry Soshnikov's post, he gave a pseudo-code of getting the real value of an object from a value of Reference type
+        and applied this pseudo-code to explain assign operator, logic expression, comma operator situation.
+        I would conclude that using 
+        <span class="text-warning">closure</span>, <span class="text-warning">assign operator</span>, <span class="text-warning">logic expression</span>, and <span class="text-warning">comma operator</span> 
+        inside a grouping operator cause <span class="text-primary">this</span> points to window/global; 
+        others reference types expression in grouping operator would just get back itself.
+    </article>
+    <br/>
+    <h3 id="inner_function">This In Inner Function</h3>
+    <article>
+        <pre>
+            <code class="js">
+    "use strict";
+    // common case of getting backing another function from a function call
+    function fooOrigin(){
+        return function bar(para){
+            console.log(this === para);
+        }
+    }
+    var objOrigin = {
+        func:{}
+    }
+
+    objOrigin.func = fooOrigin();
+    objOrigin.func(objOrigin); // 'this' points to objOrigin
+
+    ///////////////////////////////////////
+    // common case of inner function call
+    function fooOrigin_inner(para){
+        function bar(para){
+            console.log(this === para);
+        }
+        bar(para); // can assume as window/global.bar(para),
+    }
+    fooOrigin_inner(undefined) // window/global; if in strict mode, undefined
+
+    function fooOrigin_inner2(para){
+        function bar(para){
+            function tim(para){
+                console.log(this === para);
+            }
+            tim(para); //can assume as window/global.tim(para),
+        }
+        bar(para);
+    }
+    fooOrigin_inner2(undefined) // window/global; if in strict mode, undefined
+
+    ///////////////////////////////////////
+    // function in an object 
+    var foo = {
+        bar: function (para) {
+            function tim(para){
+                function mee(para){
+                    console.log(this === para);
+                }
+                mee(para); // can assume as window/global.mee(para),
+            }
+            tim(para);
+        }
+    };
+    foo.bar(undefined); // window/global; if in strict mode, undefined
+
+    // link function to an object property
+    var foo1 = {
+        obj:{
+            func:{}
+        },
+        bar:function (para) {
+            foo1.obj.func = function tim(para){
+                console.log(this === para);
+            }
+            foo1.obj.func(para);  // foo1.obj calls func(para)
+        }
+    };
+    foo1.bar(foo1.obj) // 'this' points to foo1.obj
+
+    var foo2 = {
+        obj:{
+            func:{}
+        },
+        bar:function (para) {
+            function tim(para){
+                foo2.obj.func = function mee(para){
+                    console.log(this === para);
+                }
+                foo2.obj.func(para) // foo2.obj calls func(para)
+            }
+            tim(para); 
+        }
+    };
+    foo2.bar(foo2.obj) // 'this' points to foo2.obj
+
+    var foo3 = {
+        obj:{
+            func:{}
+        },
+        bar:function (para) {
+            foo3.obj.func = function tim(para){
+                function mee(para){
+                    console.log(this === para);
+                }
+                mee(para) // can assume as window/global.mee(para),
+            }
+            foo3.obj.func(para); 
+        }
+    };
+    foo3.bar(undefined) // window/global; if in strict mode, undefined
+
+    var foo4 = {
+        bar: function (para) {
+            console.log(this === para);
+            return function(para2){ 
+                console.log(this === para2);
+            }
+        }
+    };
+    foo4.bar(foo4)(undefined) // foo4, window/global; if in strict mode, undefined
+
+    var foo5 = {
+        bar: function (para) {
+            console.log(this === para);
+            return {
+                func:function(){
+                    console.log(this);
+                }
+            }
+        }
+    };
+    foo5.bar(foo5).func() // foo5, object of {func:......};
+            </code>
+        </pre>
+
+        From <code>fooOrigin_inner()</code> and <code>fooOrigin_inner2()</code> we can see <span class="text-primary">this</span> points to window/global, 
+        so do <code>foo</code>,<code>foo3</code>, <code>foo4</code>. 
+        In contrast, <span class="text-primary">this</span> refers to <code>foo1.obj</code> and <code>foo2.obj</code> in <code>foo1</code> and <code>foo2</code>;
+        so does <code>foo5</code>.
+        Dmitry Soshnikov explains in Activation Object way; I will conclude upper code in another way.
+        The difference between <span class="text-primary">this</span> referring window/global or obj would be 
+        <b>what function is directly wrapping <span class="text-primary">this</span></b> and <b> who is calling the function</b>.
+
+    </article>
+    <br/>
+    <h3 id="object_constructing">This in Object Constructing</h3>
+    <article>
+        Talking with function called as constructor, I will combine Dmitry Soshnikov's example and his explanation with my undersding in the code below.
+        <pre>
+            <code class="js">
+    "use strict";
+    var x = 10;
+
+    function Something() {
+        console.log(this);
+        console.log(this.x);
+        this.x = 200;
+    }
+    
+    var st = new Something(); // Something, undefined (since x haven't assigned value at Creation Stage), 
+    console.log(st.x); // 200
+
+    Something(); // window/global, 10; if in strict mode, 'this' will point to undefined and error ccour 
+
+    function SomethingElse(){
+        console.log(this === SomethingElse); // false
+        console.log(this.__proto__ === SomethingElse.prototype); // true
+        console.log(this.__proto__.constructor === SomethingElse.prototype.constructor); // true
+    }
+
+    var ste = new SomethingElse();
+            </code>
+        </pre>
+        When using <code>new</code> in object creating, <code>new</code> will call the internal construct function.
+        After it created, <span class="text-primary">this</span> will point to the created object.
+    </article>
+    <br/>
+    <h3 id="binding_this">Binding This With Objects</h3>
+    <article>
+        Ok, I am tired to figure out where <span class="text-primary">this</span> refers to. 
+        Fortunately, <code>Function.prototype.call()</code> and <code>Function.prototype.apply()</code> can bind <span class="text-primary">this</span> without care
+        where it original points to.
+        <pre>
+            <code class="js">
+    "use strict";
+
+    var foo = function() {
+        return function(para){
+            console.log(this === para);
+        }
+    }
+    
+    var tom = {};
+    var jim = {};
+
+    foo()(undefined); // window/global; if in strict mode, undefined
+
+    foo().call(tom, tom); // "this" binds to "tom" object, true
+    foo().call(jim, tom); // "this" binds to "jim" object, false
+    foo().apply(jim, [jim]) // "this" binds to "jim" object, true
+    foo().apply(jim, [tom]) // "this" binds to "jim" object, false
+            </code>
+        </pre>
+        If you are unsure what is the value of <span class="text-primary">this</span> in your code, 
+        just simply use <code>Function.prototype.call()</code> and <code>Function.prototype.apply()</code> 
+        to make sure <span class="text-primary">this</span> points to the proper object.
+    </article>
+    <br/>
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="http://davidshariff.com/blog/javascript-this-keyword/">JavaScript’s ‘this’ Keyword</a></li>
+            <li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-3-this/">ECMA-262-3 in detail. Chapter 3. This.</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">Primitive</a></li>
+            <li><a href="http://docstore.mik.ua/orelly/webprog/jscript/ch04_04.htm">4.4. Primitive Types and Reference Types</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">Function.prototype.call()</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">Function.prototype.apply()</a></li>
+        </ol>
+    </article>
+<section>
