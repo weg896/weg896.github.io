@@ -1,0 +1,256 @@
+---
+layout: default
+title: Javascript Scope Chain
+meta: "This post will talk about how scope chain is related to the inner function can access outter function varialbe 
+        and scope chain related closure."
+date: 2017-03-26
+category: javascript
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#classic_code">Classic Code</a></li>
+            <li><a href="#scope_chain">Scope Chain</a></li>
+            <li><a href="#closure">Closure</a></li>
+            <li><a href="#references">References</a></li>
+        </ul>
+    </div>
+    <h3 id="classic_code">Classic Code</h3>
+    <article>
+       Before discussing any detail of scope chain, let's have a look at the following classic code.  
+       <pre>
+           <code class="js">
+    var func = [];
+    const funcLength = 3;
+
+    (function(){
+        for(var i=0;i&lt;funcLength;i++){
+            func[i] = function(){ // let me save functions, I want to reuse them in future 
+                console.log(i);
+            }
+        }
+    })();
+
+    func[0]();  // I want 0, why give me 3
+    func[1]();  // I want 1, why give me 3
+    func[2]();  // I want 2, why give me 3
+           </code>
+       </pre>
+       Jounior developers may had been facing a problem that 
+       "I want to generate a group of functions, each of them needs to access generated data, and encapsulation is also be considered".
+       Using and modifying the upper code could be the most choice. However, it does not work as expected.
+    </article>
+    <br/>
+    <h3 id="scope_chain">Scope Chain</h3>
+    <article>
+        Referring to my previous post about <a href="{{site.url}}/javascript/2017/02/15/Javascript-Execution-Context.html">execution context</a>. 
+        When a function is invoked, an execution context of the function ie created. Inside the execution context, scope chain will be initialized.
+        <div class="row">
+            <div class="col-4">
+                <pre>
+                    <code class="js">
+    var x = 10;
+    function foo(){
+        var x = 200;
+        function bar(){
+            var x = 3000;
+            console.log(x);
+        }
+        bar();
+    }
+
+    foo(); // output 3000
+                    </code>
+                </pre>
+            </div>
+            <div class="col-4">
+                <pre>
+                    <code class="js">
+    var x = 10;
+    function foo(){
+        var x = 200;
+        function bar(){
+            // var x = 3000;
+            console.log(x);
+        }
+        bar();
+    }
+
+    foo(); // output 200
+                    </code>
+                </pre>
+            </div>
+            <div class="col-4">
+                <pre>
+                    <code class="js">
+    var x = 10;
+    function foo(){
+        // var x = 200;
+        function bar(){
+            // var x = 3000;
+            console.log(x);
+        }
+        bar();
+    }
+    
+    foo(); // output 10
+                    </code>
+                </pre>
+            </div>
+        </div>
+        The three pieces of code are very similar, only difference is some lines of <code>variable x</code> are commented out. 
+        When these pieces of code have executed at <code>bar();</code>, we know the execution context would look as follow.
+        <div class="row">
+            <figure class="figure">
+                <img src="{{site:url}}/img/post/context_stack_in_scope_chain.svg" class="figure-img img-fluid rounded" alt="execution context stack"/>
+                <figcaption class="figure-caption text-right">fig 1. execution context stack</figcaption>
+            </figure>
+        </div>
+        Inside the execution context of <code>bar()</code>, there is a thing called <span class="text-warning">scope</span>, 
+        and <span class="text-warning">scope</span> allows <code>bar()</code> to access its outer function's variables.
+        The left-hand side of the code, <code>x</code> is defined inside <code>bar()</code>, so the output is 3000.
+        Function <code>bar()</code> of the middle code does not contain <code>x</code>. 
+        Then <code>bar()</code> traversal its outer function to retrieve <code>x</code>, <code>x</code> is 200.
+        Same thing happens on the right-hand side of the code. <code>bar()</code> can not find <code>x</code> in <code>foo()</code>, 
+        but via <span class="text-warning">scope</span>, <code>bar()</code> still can get <code>x</code> equal to 10, which <code>x</code> is defined in global.
+    </article>
+    <article>
+        Variables accessing via <span class="text-warning">scope chain</span> is base on <b>where the function is defined, NOT where the function is called</b>.
+        <pre>
+            <code class="js">
+    "use strict";
+    var x = 10;
+    function foo(){
+        var x = 200;
+        bar();
+    }
+
+    function bar(){
+        console.log(x); 
+    }
+
+    foo(); // output 10, not 200;
+            </code>
+        </pre>
+        <code>bar()</code> is defined in global, so when <code>bar()</code> uses <span class="text-warning">scope chain</span> to get <code>x</code>,
+        <code>bar()</code> outter "function", global variable <code>x</code> will be accessed.
+        <div class="row">
+            <figure class="figure">
+                <img src="{{site:url}}/img/post/scope_chain.svg" class="figure-img img-fluid rounded" alt="Scope Chain Flowing Chart"/>
+                <figcaption class="figure-caption text-right">fig 2. Scope Chain Flowing Chart</figcaption>
+            </figure>
+        </div>
+    </article>
+    <br/>
+    <h3 id="closure">Closure</h3>
+    <article>
+        <blockquote class="blockquote">
+            <p class="mb-0">A closure is a function having access to the parent scope, even after the parent function has closed.</p>
+            <footer class="blockquote-footer">
+                <a href="https://www.w3schools.com/js/js_function_closures.asp">
+                    w3schools.com <cite title="Source Title">JavaScript Closures</cite>
+                </a>
+            </footer>
+        </blockquote>
+        If you want private variables, closure is what you want. But, is it related to <span class="text-warning">Scope Chain</span>?
+        YES, it is. Back to our first classic example mention at the top. 
+        <pre>
+           <code class="js">
+    var func = [];
+    const funcLength = 3;
+
+    (function(){
+        for(var i=0;i&lt;funcLength;i++){
+            func[i] = function(){ // let me save functions, I want to reuse them in future 
+                console.log(i);
+            }
+        }
+    })();
+           </code>
+       </pre>
+       After <code>(function(){...})()</code> run. variable <code>i</code> can not be directelly accessed from global.
+       We know that <code>func[i] = function(){...}</code> is defined inside the closure, 
+       so <code>console.log(i);</code> can access its outter function's <code>i</code> via <span class="text-warning">Scope Chain</span>.
+       After <code>(function(){...})()</code> execuded, <code>i</code> become 3. 
+       Then all three <code>func[]()</code> called will give back 3 because accessing <code>i</code> by traversal <span class="text-warning">Scope Chain</span>.
+       To get what we want, we can modify the code to
+        <div class="row">
+            <div class="col-6">
+                <pre>
+                    <code class="js">
+    "use strict";
+    var func = [];
+    const funcLength = 3;
+
+    (function(){
+        for(var i=0;i&lt;funcLength;i++){
+            func[i] = (function(i){ 
+                return function(){
+                    console.log(i);
+                }
+            })(i);
+        }
+    })();
+
+    func[0]();  // 0
+    func[1]();  // 1
+    func[2]();  // 2
+                    </code>
+                </pre>
+            </div>
+            <div class="col-6">
+                <pre>
+                    <code class="js">
+    "use strict";
+    var func = [];
+    const funcLength = 3;
+
+    (function(){
+        for(let i=0;i&lt;funcLength;i++){
+            func[i] = function(){
+                console.log(i);
+            }
+        }
+    })();
+
+    func[0]();  // 0
+    func[1]();  // 1
+    func[2]();  // 2
+                    </code>
+                </pre>
+            </div>
+        </div>
+    On tHe left-hand side, I use another function warps <code>function(){console.log(i);}</code> and make <code>i</code> as parameter. 
+    Each time <code>func[]();</code> is called, it will find <code>i</code> in outter function's variable object, not form the <code>for</code> loop.
+    and there are different outter function's variable object. Then <code>func[]();</code> outputs are different. 
+    <br/><br/>
+    On the right-hand side, I change <code>var i</code> to <code>let i</code> of the <code>for</code> loop.
+    Keyword <code>let</code> defines a variable in block scope. 
+
+    <blockquote class="blockquote">
+        <p class="mb-0">In loops, you get a fresh binding for each iteration if you let-declare a variable. 
+            The loops that allow you to do so are: for, for-in and for-of.
+            In contrast, a var declaration leads to a single binding for the whole loop
+        </p>
+        <footer class="blockquote-footer">
+            <a href="http://2ality.com/2015/02/es6-scoping.html">
+                Variables and scoping in ECMAScript 6
+            </a>
+        </footer>
+    </blockquote>
+    Hence, keyword <code>let</code> also works as expected.
+    </article>
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-4-scope-chain/">ECMA-262-3 in detail. Chapter 4. Scope chain.</a></li>
+            <li><a href="http://davidshariff.com/blog/javascript-scope-chain-and-closures/#first-article">Identifier Resolution and Closures in the JavaScript Scope Chain</a></li>
+            <li><a href="https://www.w3schools.com/js/js_function_closures.asp">JavaScript Closures, w3schools.com</a></li>
+            <li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/let">let</a></li>
+            <li><a href="http://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example">JavaScript closure inside loops – simple practical example</a></li>
+            <li><a href="http://2ality.com/2015/02/es6-scoping.html">Variables and scoping in ECMAScript 6</a></li>
+        </ol>
+    </article>
+<section>

@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="149mm"
-   height="50mm"
-   viewBox="0 0 149 50"
+   width="114mm"
+   height="39mm"
+   viewBox="0 0 114 39"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="context.svg">
+   sodipodi:docname="context_stack.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="378.28018"
-     inkscape:cy="166.3987"
+     inkscape:cx="235.20114"
+     inkscape:cy="74.849846"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -52,63 +52,63 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-247)">
+     transform="translate(0,-258)">
     <rect
-       style="fill:#e3dedb;stroke-width:0.26458332"
+       style="fill:#e3dedb;stroke-width:0.20112112"
        id="rect16"
-       width="141.65285"
-       height="12.294398"
-       x="3.5543258"
-       y="280.3945"
-       ry="6.0476074" />
+       width="107.6764"
+       height="9.345499"
+       x="3.4248238"
+       y="284.28851"
+       ry="4.5970454" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="25.286209"
-       y="289.01721"
+       style="font-style:normal;font-weight:normal;font-size:8.04484463px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.20112112"
+       x="19.94416"
+       y="290.84302"
        id="text14"><tspan
          sodipodi:role="line"
          id="tspan12"
-         x="25.286209"
-         y="289.01721"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111126px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">Global Execution Context</tspan></text>
+         x="19.94416"
+         y="290.84302"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.8995533px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.20112112">Global Execution Context</tspan></text>
     <rect
-       style="fill:#e3dedb;stroke-width:0.26458332"
+       style="fill:#e3dedb;stroke-width:0.20112112"
        id="rect16-7"
-       width="141.65285"
-       height="12.294398"
-       x="3.0144165"
-       y="265.92435"
-       ry="6.0476074" />
+       width="107.6764"
+       height="9.345499"
+       x="3.0144155"
+       y="273.28915"
+       ry="4.5970454" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="6.1764417"
-       y="274.16226"
+       style="font-style:normal;font-weight:normal;font-size:8.04484463px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.20112112"
+       x="5.4180064"
+       y="279.55115"
        id="text14-1"><tspan
          sodipodi:role="line"
          id="tspan12-4"
-         x="6.1764417"
-         y="274.16226"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">Execution Context of function a() code</tspan></text>
+         x="5.4180064"
+         y="279.55115"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.36322975px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.20112112">Execution Context of function a() code</tspan></text>
     <rect
-       style="fill:#e3dedb;stroke-width:0.26458332"
+       style="fill:#e3dedb;stroke-width:0.20112112"
        id="rect16-1"
-       width="141.65285"
-       height="12.294398"
+       width="107.6764"
+       height="9.345499"
        x="3.0144126"
-       y="251.51329"
-       ry="6.0476074" />
+       y="262.33456"
+       ry="4.5970454" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="6.0997891"
-       y="260.33841"
+       style="font-style:normal;font-weight:normal;font-size:8.04484463px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.20112112"
+       x="5.3597393"
+       y="269.04303"
        id="text14-3"><tspan
          sodipodi:role="line"
          id="tspan12-44"
-         x="6.0997891"
-         y="260.33841"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">Execution Context of function b() code</tspan></text>
+         x="5.3597393"
+         y="269.04303"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.36322975px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.20112112">Execution Context of function b() code</tspan></text>
   </g>
 </svg>
