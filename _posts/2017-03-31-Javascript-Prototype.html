@@ -5,6 +5,7 @@ meta: "Prototype is very important for javascript object inheritance.
         This post will go through the details of javascript prototype."
 date: 2017-03-31
 category: javascript
+author: Jerry Guan
 ---
 <section class="post-meta">
     {% include postTitle.html title=page.title date=page.date category=page.category %}
@@ -25,7 +26,7 @@ category: javascript
     <h3 id="about_object">About Object</h3>
     <article>
         <h5 id="sub_object">Object</h5>
-        Prototype is a javascript mechanism that allows javascript object inheritance from another object. Let see some samples for object creation.
+        Prototype is a javascript mechanism that allows javascript object inheritance from another object. Let's see some samples for object creation.
         <pre>
             <code class="js">
     "use strict";
@@ -67,15 +68,14 @@ category: javascript
     console.log(j instanceof Object); // true
             </code>
         </pre>
-        Code in above are all <span class="text-warning">object</span>. Except <code>e</code>, all objects are instance of <code>Object</code>,
-        In other words, all objects are inheritance from <code>Object</code> directly or indirectly.
-        To create an object, we can use key word <code>new</code>, call <code>Object.create()</code>, 
+        All variables in above are <span class="text-warning">object</span>. Except for <code>e</code>, all objects are instance of <code>Object</code>,
+        In other words, these objects are inherited from <code>Object</code> directly or indirectly.
+        To create an object, we can use operator <code>new</code>, call <code>Object.create()</code>, 
         or use <code>{}</code> for general object <code>[]</code> for array.
-        Function object can create via function definition and function expression.
+        a function object can be created via function definition and function expression.
         <br/><br/>
 
         <h5 id="sub_object_proto_">Object.__proto__</h5>
-        Let discuss deeper of object below.
         <pre>
             <code class="js">
     "use strict";
@@ -149,27 +149,26 @@ category: javascript
     ........
             </code>
         </pre>
-        As upper code shows that objects have property called <code>__proto__</code>. 
+        The upper code shows that objects have a property called <code>__proto__</code>. 
         Base on the output from upper code: 
         <ul>
             <li>
                 When creating an object using <code>Object.create(para)</code>, the object's <code>__proto__</code> will point to the parameter of <code>Object.create(para)</code> 
             </li>
             <li>    
-                <code>null</code> is specail case, object creating via <code>Object.create(null)</code> will make it's <code>__proto__</code> empty, so does it's descendants.
+                <code>null</code> is a special case, object, which creating via <code>Object.create(null)</code>, will make it's <code>__proto__</code> empty, so does it's descendants.
             </li>
             <li>
-                Via <code>new</code> operator, <code>{}</code>, and <code>[]</code> to create object, object's <code>__proto__</code> will point to constructor's <code>prototype</code>. 
+                Via <code>new</code> operator, <code>{}</code>, and <code>[]</code> to create objects, object's <code>__proto__</code> will point to constructor's <code>prototype</code>. 
             </li>
             <li>
-                <code>__proto__</code> of pre-defined object, function variable and function declearation are leading to <code>Function.prototype</code>.
+                <code>__proto__</code> of pre-defined object, function variable and function declaration are leading to <code>Function.prototype</code>.
                 their <code>__proto__</code> point to constructor's <code>prototype</code>.
             </li>
         </ul>
         Referring to <a href="http://stackoverflow.com/users/578895/mark-kahn">Mark Kahn</a>'s answer on <a href="http://stackoverflow.com/questions/9959727/proto-vs-prototype-in-javascript">__proto__ VS. prototype in JavaScript</a>, 
         <code>__proto__</code> is the actual object that is used in the lookup chain to resolve methods. 
-        If an object want to retrive a value of a property, it will traversal through <code>__proto__</code>.
-        Then we know how to assign value to make property chain work.
+        Then we know how to make prototype chain work.
         <div class="row">
             <div class="col-6"><pre><code class="js">
     "use strict";
@@ -208,11 +207,9 @@ category: javascript
     console.log(a.bar === 333);
             </code></pre></div>
         </div>
-        <br/>
-        There is a property called <code>prototype</code>, and <code>prototype</code> is different from <code>__proto__</code>. 
         <br/><br/>
         <h5 id="sub_object_prototype">Object.prototype</h5>
-        Let's' look at an other picece of code.
+        There is a property called <code>prototype</code>. <code>prototype</code> is different from <code>__proto__</code>. 
         <pre> 
             <code class="js">
     // variables are from upper code
@@ -327,7 +324,7 @@ category: javascript
         <br/><br/>
         <h5 id="sub_object_prototype_more">Object.prototype More</h5>
         Now we are focusing on object creation with <code>new</code> operator. 
-        We know that function variable and function definition can use for newing objects, 
+        We know that function variable and function definition can be used for newing objects, 
         The chart below will illustrate prototype better.
         <div class="row">
             <div class="col-6">
@@ -369,7 +366,7 @@ category: javascript
     console.log(Function.__proto__ === Function.prototype);
     console.log(Function.prototype.constructor === Function);
                 </code></pre>
-                Function definition and function variable are inheritance form <code>Function</code>.
+                Function definition and function variable are inherited form <code>Function</code>.
                 The relation between <code>Function</code> and <code>Function.prototype</code> is very similar to <code>Foo</code> and <code>Foo.prototype</code>.
                 <br/><br/>
             </div>
@@ -435,8 +432,14 @@ category: javascript
 
     console.log(temp.constructor === Foo);
     console.log(temp.__proto__ === Foo.prototype);
+
+    Foo.prototype.a = 333;
+    console.log(temp.a === 333);    
                 </code></pre>
                 For all objects that are created by <code>new</code> operator, these objects are descendants of <code>Object</code>.
+                <code>temp.constructor</code> is referring to <code>Foo</code> function because <code>temp</code> is constructed by <code>Foo</code>.
+                Since <code>temp.__proto__</code> is used for prototype chain accessing, <code>temp.__proto__</code> refers to <code>Foo.prototype</code>.
+                In the future, I will explain more of object inheritance in javascript. 
                 <br/><br/>
             </div>
             <div class="col-6">
@@ -454,7 +457,7 @@ category: javascript
             <p class="mb-0">
                 <span class="text-warning">Variables</span> are looked up on the scope chain, starting with the current execution context and going up the tree of enclosing execution contexts.
                 <br/><br/>
-                <span class="text-warning">Properties</span> are looked up firstly on the base object, then on that object's [[Prototoype]] chain (i.e. its internal prototype).
+                <span class="text-warning">Properties</span> are looked up firstly on the base object, then on that object's <spa class="text-danger">[[Prototoype]]</spa> chain (i.e. its internal prototype).
             </p>
             <footer class="blockquote-footer">
                 <a href="http://stackoverflow.com/questions/27434357/scope-chain-look-up-vs-prototype-look-up-which-is-when">
@@ -462,7 +465,7 @@ category: javascript
                 </a>
             </footer>
         </blockquote>
-        To test the value retrived from <span class="test-success">Scope Chain</code> and <span class="test-success">Prototype Chain</code>, 
+        To test the value retrived from <span class="text-success">Scope Chain</span> and <span class="text-success">Prototype Chain</span>, 
         I wrote the code as follow.
         <pre>
             <code class="js">
@@ -483,10 +486,10 @@ category: javascript
             </code>
         </pre>
         The output will be "scope" and "proto". <code>a</code> is <code>Foo</code> function's local variable, 
-        so <code>readValue</code> function accesses <code>a</code> via <span class="test-success">Scope Chain</code>.
+        so <code>readValue</code> function accesses <code>a</code> via <span class="text-success">Scope Chain</span>.
         On other the hand, when <code>readValue</code> is called by <code>temp</code>, then <code>this.a</code> is referred to <code>temp.a</code>.
         Since <code>temp</code> doesn't have it own property <code>a</code>, 
-        <code>temp</code> will access its <span class="test-success">Prototype Chain</code> to get the value of <code>this.a</code>
+        <code>temp</code> will access its <span class="text-success">Prototype Chain</span> to get the value of <code>this.a</code>
     </article>
     <h3 id="references">References</h3>
     <article>
