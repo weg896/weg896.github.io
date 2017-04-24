@@ -344,6 +344,7 @@ category: javascript
                 The figure on right hand side shows classic relation between <code>Foo</code> and <code>Foo.prototype</code>.
                 <code>Foo</code>'s prototype property points to <code>Foo.prototype</code>,
                 And <code>Foo.prototype</code>'s constructor prototype refers back to <code>Foo</code>.
+                <br/><br/>
             </div>
             <div class="col-6">
                 <figure class="figure">
@@ -370,7 +371,7 @@ category: javascript
                 </code></pre>
                 Function definition and function variable are inheritance form <code>Function</code>.
                 The relation between <code>Function</code> and <code>Function.prototype</code> is very similar to <code>Foo</code> and <code>Foo.prototype</code>.
-                
+                <br/><br/>
             </div>
             <div class="col-6">
                 <figure class="figure">
@@ -408,6 +409,7 @@ category: javascript
     console.log(Object.prototype.__proto__ === null);
                 </code></pre>
                 Combining <code>Object</code> and figure-2 to form figure-3. 
+                <br/><br/>
             </div>
             <div class="col-6">
                 <figure class="figure">
@@ -435,6 +437,7 @@ category: javascript
     console.log(temp.__proto__ === Foo.prototype);
                 </code></pre>
                 For all objects that are created by <code>new</code> operator, these objects are descendants of <code>Object</code>.
+                <br/><br/>
             </div>
             <div class="col-6">
                 <figure class="figure">
@@ -446,18 +449,44 @@ category: javascript
     </article>
     <h3 id="prototype_vs_scope">Prototype Chain vs. Scope Chain</h3>
     <article>
-        In previous post I had talked about scope chain. Here the is a question, how do value be retrived?
-        According to <a href="http://stackoverflow.com/questions/27434357/scope-chain-look-up-vs-prototype-look-up-which-is-when">Scope chain look-up vs prototype look-up - Which is when</a>,
+        In previous post I had talked about scope chain to get value. Here the is a question, how do value be retrived?
         <blockquote class="blockquote">
             <p class="mb-0">
                 <span class="text-warning">Variables</span> are looked up on the scope chain, starting with the current execution context and going up the tree of enclosing execution contexts.
                 <br/><br/>
                 <span class="text-warning">Properties</span> are looked up firstly on the base object, then on that object's [[Prototoype]] chain (i.e. its internal prototype).
             </p>
-            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+            <footer class="blockquote-footer">
+                <a href="http://stackoverflow.com/questions/27434357/scope-chain-look-up-vs-prototype-look-up-which-is-when">
+                    Scope chain look-up vs prototype look-up - Which is when
+                </a>
+            </footer>
         </blockquote>
+        To test the value retrived from <span class="test-success">Scope Chain</code> and <span class="test-success">Prototype Chain</code>, 
+        I wrote the code as follow.
+        <pre>
+            <code class="js">
+    "use strict";
+    function Foo(){
+		var a = "scope";
+		
+		this.readValue = function(){
+			console.log(a);  // scope
+			console.log(this.a); // proto
+		}
+	}
+	
+    Foo.prototype.a = "proto_2";
 
-
+	var temp = new Foo();
+	temp.readValue();
+            </code>
+        </pre>
+        The output will be "scope" and "proto". <code>a</code> is <code>Foo</code> function's local variable, 
+        so <code>readValue</code> function accesses <code>a</code> via <span class="test-success">Scope Chain</code>.
+        On other the hand, when <code>readValue</code> is called by <code>temp</code>, then <code>this.a</code> is referred to <code>temp.a</code>.
+        Since <code>temp</code> doesn't have it own property <code>a</code>, 
+        <code>temp</code> will access its <span class="test-success">Prototype Chain</code> to get the value of <code>this.a</code>
     </article>
     <h3 id="references">References</h3>
     <article>
