@@ -1,0 +1,64 @@
+---
+layout: default
+title: DOM Event Capturing And Bubbling
+meta: "This post will talk about what is HTML DOM, and
+    how does an event propagate when someone click a button on a website?"
+date: 2017-04-24
+category: javascript
+author: Jerry Guan
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category author=page.author %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#what_is_DOM">What Is DOM</a></li>
+            <li><a href="#references">References</a></li>
+        </ul>
+    </div>
+    <h3 id="what_is_DOM">What Is DOM</h3>
+    <article>
+        The Doocument Objec Model (DOM) is very import concept. W3C gives a standard answer of what is DOM.
+        <blockquote class="blockquote">
+            <p class="mb-0">
+                The W3C Document Object Model (DOM) is a platform and language-neutral interface 
+                that allows programs and scripts to dynamically access and update the content, structure, and style of a document.
+            </p>
+            <footer class="blockquote-footer"><a href="https://www.w3schools.com/js/js_htmldom.asp">JavaScript HTML DOM</a></footer>
+        </blockquote>
+        DOM has 3 parts: Core DOM, XML DOM and HTML DOM. This post only discusses HTML DOM, 
+        which can be used by javascript to add, get, change, and delete HTML element.
+        (ps: It sounds very RESTful)
+        <pre>
+            <code class="html">
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;style&gt;
+                h1 { color:#234; }
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h1 id="title" &gt;title&lt;/h1&gt;
+            &lt;p&gt;This is content.&lt;/p&gt;
+            &lt;div class="funny" &gt;
+                &lt;span&gt;span&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;script&gt;
+                console.log("This is script.");
+            &lt;/script&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+            </code>
+        </pre>
+    The code above is a very classic sample website. The HTML DOM tree shows as the figure in right hand site
+    </article>
+    <br/>
+    
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="https://www.w3schools.com/js/js_htmldom.asp">JavaScript HTML DOM</a></li>
+        </ol>
+    </article>
+<section>
