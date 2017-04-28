@@ -13,6 +13,7 @@ author: Jerry Guan
         <h5>index</h5>
         <ul>
             <li><a href="#what_is_DOM">What Is DOM</a></li>
+            <li><a href="#event_propagate">Event Propagate</a></li>
             <li><a href="#references">References</a></li>
         </ul>
     </div>
@@ -35,14 +36,13 @@ author: Jerry Guan
     &lt;html&gt;
         &lt;head&gt;
             &lt;style&gt;
-                h1 { color:#234; }
+                h1 {color:#234;}
             &lt;/style&gt;
         &lt;/head&gt;
         &lt;body&gt;
             &lt;h1 id="title" &gt;title&lt;/h1&gt;
-            &lt;p&gt;This is content.&lt;/p&gt;
-            &lt;div class="funny" &gt;
-                &lt;span&gt;span&lt;/span&gt;
+            &lt;div&gt;
+                &lt;span class="funny" &gt;span&lt;/span&gt;
             &lt;/div&gt;
             &lt;script&gt;
                 console.log("This is script.");
@@ -51,14 +51,28 @@ author: Jerry Guan
     &lt;/html&gt;
             </code>
         </pre>
-    The code above is a very classic sample website. The HTML DOM tree shows as the figure in right hand site
+        The code above is a very classic sample website. The HTML DOM tree with <code>window</code> object shows as the figure below.
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/DOM_tree.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree"/>
+            <figcaption class="figure-caption text-center">fig 1. HTML DOM tree with window object</figcaption>
+        </figure>
     </article>
     <br/>
-    
+    <h3 id="event_propagate">Event Propagate</h3>
+    <article>
+        Since the event listener only can be binded to element, the HTML DOM tree figure will simplify as below.
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/DOM_tree_simp.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 2"/>
+            <figcaption class="figure-caption text-center">fig 2. HTML DOM tree simplify</figcaption>
+        </figure>
+        An event is fired by <code>window</code> object
+    </article>
+    <br/>
     <h3 id="references">References</h3>
     <article>
         <ol>
             <li><a href="https://www.w3schools.com/js/js_htmldom.asp">JavaScript HTML DOM</a></li>
+            <li><a href="https://www.kirupa.com/html5/event_capturing_bubbling_javascript.htm">Event Capturing and Bubbling in JavaScript</a></li>
         </ol>
     </article>
 <section>
