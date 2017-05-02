@@ -65,7 +65,91 @@ author: Jerry Guan
             <img src="{{site.url}}/img/post/DOM_tree_simp.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 2"/>
             <figcaption class="figure-caption text-center">fig 2. HTML DOM tree simplify</figcaption>
         </figure>
-        An event is fired by <code>window</code> object
+        Assuming I click <code>span</code> tag. A click event is fired by <code>window</code> object. 
+        The event gose through every node in the path.
+        We call it <span class="text-warning">Event Capturing Phase</span>. 
+        After the event reach the target note, the event will pass back to <code>window</code> object.
+        We call it <span class="text-warning">Event Bubbling Phase</span>.
+        To test <span class="text-warning">Event Capturing Phase</span> and <span class="text-warning">Event Bubbling Phase</span>, 
+        I use <code>addEventListener()</code> function.
+        Let's look at the code below.
+        <pre>
+            <code class="html">
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;style&gt;
+                h1 {color:#234;}
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h1 id="title" &gt;title&lt;/h1&gt;
+            &lt;div&gt;
+                &lt;span class="funny" &gt;span&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;script&gt;
+                var bdTag = document.getElementsByTagName("body")[0];
+                var spTag = document.getElementsByTagName("span")[0];
+
+                bdTag.addEventListener("click", function(){
+                    console.log("body tag catches click event");
+                }, true); // event is catched in the capturing phase
+                spTag.addEventListener("click", function(){
+                    console.log("span tag catches click event");
+                });
+                window.addEventListener("click", function(){
+                    console.log("window object catches click event")
+                });
+            &lt;/script&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+            </code>
+        </pre>
+        When I click <code>span</code>, 
+        the output would be <span class="text-success">body</span> -&gt; <span class="text-success">span</span> -&gt; <span class="text-success">window</span>
+        <pre><code class="js">
+        body tag catches click event
+        span tag catches click event
+        window object catches click event
+        </code></pre>
+        If I modified the code to
+        <pre>
+            <code class="html">
+    ........
+    &lt;script&gt;
+        var bdTag = document.getElementsByTagName("body")[0];
+        var spTag = document.getElementsByTagName("span")[0];
+
+        bdTag.addEventListener("click", function(){
+            console.log("body tag catches click event");
+        }); // catch event in bubbling phase
+        spTag.addEventListener("click", function(){
+            console.log("span tag catches click event");
+        });
+        window.addEventListener("click", function(){
+            console.log("window object catches click event")
+        });
+    &lt;/script&gt;
+    ........
+            </code>
+        </pre>
+        This time would be <span class="text-success">span</span> -&gt; <span class="text-success">body</span> -&gt; <span class="text-success">window</span>
+        <pre><code class="js">
+        span tag catches click event
+        body tag catches click event
+        window object catches click event
+        </code></pre>
+        <div class="row">
+            <figure class="figure col-6">
+                <img src="{{site.url}}/img/post/DOM_tree_code_1.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-1"/>
+                <figcaption class="figure-caption text-center">fig 3-1. HTML DOM tree 3-1</figcaption>
+            </figure>
+            <figure class="figure col-6">
+                <img src="{{site.url}}/img/post/DOM_tree_code_2.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-2"/>
+                <figcaption class="figure-caption text-center">fig 3-2. HTML DOM tree 3-2</figcaption>
+            </figure>
+        </div>
+        Catching event in different phases would lead different results. We should careful in 
     </article>
     <br/>
     <h3 id="references">References</h3>
@@ -73,6 +157,7 @@ author: Jerry Guan
         <ol>
             <li><a href="https://www.w3schools.com/js/js_htmldom.asp">JavaScript HTML DOM</a></li>
             <li><a href="https://www.kirupa.com/html5/event_capturing_bubbling_javascript.htm">Event Capturing and Bubbling in JavaScript</a></li>
+            <li><a href="https://www.w3schools.com/jsref/met_document_addeventlistener.asp">HTML DOM addEventListener() Method</a></li>
         </ol>
     </article>
 <section>
