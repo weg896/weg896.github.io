@@ -14,12 +14,13 @@ author: Jerry Guan
         <ul>
             <li><a href="#what_is_DOM">What Is DOM</a></li>
             <li><a href="#event_propagate">Event Propagate</a></li>
+            <li><a href="#stop_event_propagate">Stop Event Propagate</a></li>
             <li><a href="#references">References</a></li>
         </ul>
     </div>
     <h3 id="what_is_DOM">What Is DOM</h3>
     <article>
-        The Doocument Objec Model (DOM) is very import concept. W3C gives a standard answer of what is DOM.
+        The Document Object Model (DOM) is very import concept. W3C gives a standard answer of what is DOM.
         <blockquote class="blockquote">
             <p class="mb-0">
                 The W3C Document Object Model (DOM) is a platform and language-neutral interface 
@@ -60,18 +61,18 @@ author: Jerry Guan
     <br/>
     <h3 id="event_propagate">Event Propagate</h3>
     <article>
-        Since the event listener only can be binded to element, the HTML DOM tree figure will simplify as below.
+        Since the event listener only can be bound to an element, the HTML DOM tree figure will simplify as below.
         <figure class="figure">
             <img src="{{site.url}}/img/post/DOM_tree_simp.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 2"/>
             <figcaption class="figure-caption text-center">fig 2. HTML DOM tree simplify</figcaption>
         </figure>
         Assuming I click <code>span</code> tag. A click event is fired by <code>window</code> object. 
-        The event gose through every node in the path.
+        The event goes through every node in the path.
         We call it <span class="text-warning">Event Capturing Phase</span>. 
-        After the event reach the target note, the event will pass back to <code>window</code> object.
+        After the event reaches the target note, the event will pass back to the <code>window</code> object.
         We call it <span class="text-warning">Event Bubbling Phase</span>.
         To test <span class="text-warning">Event Capturing Phase</span> and <span class="text-warning">Event Bubbling Phase</span>, 
-        I use <code>addEventListener()</code> function.
+        I use the <code>addEventListener()</code> function.
         Let's look at the code below.
         <pre>
             <code class="html">
@@ -112,6 +113,10 @@ author: Jerry Guan
         span tag catches click event
         window object catches click event
         </code></pre>
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/DOM_tree_code_1.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-1"/>
+            <figcaption class="figure-caption text-center">fig 3-1. HTML DOM tree 3-1</figcaption>
+        </figure>
         If I modified the code to
         <pre>
             <code class="html">
@@ -133,23 +138,50 @@ author: Jerry Guan
     ........
             </code>
         </pre>
-        This time would be <span class="text-success">span</span> -&gt; <span class="text-success">body</span> -&gt; <span class="text-success">window</span>
+        This time the output would be <span class="text-success">span</span> -&gt; <span class="text-success">body</span> -&gt; <span class="text-success">window</span>
         <pre><code class="js">
         span tag catches click event
         body tag catches click event
         window object catches click event
         </code></pre>
-        <div class="row">
-            <figure class="figure col-6">
-                <img src="{{site.url}}/img/post/DOM_tree_code_1.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-1"/>
-                <figcaption class="figure-caption text-center">fig 3-1. HTML DOM tree 3-1</figcaption>
-            </figure>
-            <figure class="figure col-6">
-                <img src="{{site.url}}/img/post/DOM_tree_code_2.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-2"/>
-                <figcaption class="figure-caption text-center">fig 3-2. HTML DOM tree 3-2</figcaption>
-            </figure>
-        </div>
-        Catching event in different phases would lead different results. We should careful in 
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/DOM_tree_code_2.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-2"/>
+            <figcaption class="figure-caption text-center">fig 3-2. HTML DOM tree 3-2</figcaption>
+        </figure>
+    </article>
+    <br/>
+    <h3 id="stop_event_propagate">Stop Event Propagate</h3>
+    <article>
+        If I want a tag to capture an event and stop the event propagation, I can use <code>event.stopPropagation()</code> to stop the event.
+        <pre>
+            <code class="html">
+    ........
+    &lt;script&gt;
+        var bdTag = document.getElementsByTagName("body")[0];
+        var spTag = document.getElementsByTagName("span")[0];
+
+        bdTag.addEventListener("click", function(){
+            console.log("body tag catches click event");
+        });
+        spTag.addEventListener("click", function(event){
+            console.log("span tag catches click event");
+            event.stopPropagation();
+        });
+        window.addEventListener("click", function(){
+            console.log("window object catches click event")
+        });
+    &lt;/script&gt;
+    ........
+            </code>
+        </pre>
+        At this situation, when I click <code>span</code> tag, it only outputs one line and stops the <code>click</code> event propagation.
+        <pre><code class="js">
+    span tag catches click event
+        </code></pre>
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/DOM_tree_code_3.svg" class="figure-img img-fluid rounded" alt="HTML DOM tree 3-3"/>
+            <figcaption class="figure-caption text-center">fig 3-3. HTML DOM tree 3-3</figcaption>
+        </figure>
     </article>
     <br/>
     <h3 id="references">References</h3>
