@@ -1,0 +1,118 @@
+---
+layout: default
+title: "Build V8 with Visual Studio 2015"
+meta: "Building V8 with Visual Studio 2015 is not straightforward.
+    This post will guide you step by step to run"
+date: 2017-07-18
+category: javascript
+author: Jerry Guan
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category author=page.author %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#before_anything">Before Anything</a></li>
+            <li><a href="#tools_preparation">Tools Preparation</a></li>
+            <li><a href="#instructions_before_build">Instructions Before Build</a></li>
+            <li><a href="#references">References</a></li>
+        </ul>
+    </div>
+    <h3 id="before_anything">Before Anything</h3>
+    <article>
+        Before I compiled v8 with visual studio 2015 successfully, 
+        I had tried the method from <a href="https://chandratechnotes.wordpress.com/2015/05/24/how-to-build-v8-source-code-on-windows-with-visual-studio/">Chandra's Blog</a>,
+        and <a href="https://docs.google.com/document/d/1q3JkYNJhib3ni9QvNKIY_uarVxeVDiDi6teE5MbVIGQ/edit">v8 with eclipse</a>.
+        But, I can not build v8 by followed these poses.
+        <br/><br/>
+        Why I don't use <code>make</code> command with <code>gdb</code> debugger in Linux? 
+        Because visual studio is easier to trace functions called and variables value.
+    </article>
+
+    <br/>
+    <h3 id="tools_preparation">Tools Preparation</h3>
+    <article>
+        <ol>
+            <li>Install Visual Studio 2015 (while I am writing this post, visual studio 2017 has already released)</li>
+            <li>Install Visual C++ Redistributable (serial versions may be required to install)</li>
+            <li>Install git/github (make sure you can run git from command prompt/powershell)</li>
+            <li>Install python 2.7+ (don't use 3.x)</li> 
+        </ol>
+    </article>
+    <br/>
+
+    <h3 id="instructions_before_build">Instructions Before Build</h3>
+    <article>
+        <ol>
+            <li>
+                Clone <span class="text-warning">depot tools</span> by running command <code>git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git</code>
+            </li>
+            <li>
+                Add the <span class="text-warning">depot tools</span> to environment path (so that you can run <code>gclient</code> in command prompt/powershell)
+            </li>
+            <li>
+                Open command prompt and run <code>fetch v8</code>, then it will download v8 source code.<br/>
+                Why not just use the source code from github? Because some files are missing.
+            </li>
+            <li>
+                Now you should see a <span class="text-warning">v8</span> folder. 
+                Go into <span class="text-warning">v8/gypfiles</span>.
+                Currently, you should see file <span class="text-info">gyp_v8</span> 
+                (If not, you are in wrong direcotry)<br/>
+                <figure class="figure">
+                    <img src="{{site.url}}/img/post/v8_gyp.JPG" class="figure-img img-fluid" alt="gyp_v8"/>
+                    <figcaption class="figure-caption text-center">fig 1. gyp_v8 file</figcaption>
+                </figure>
+            </li>
+            <li>
+                Use any text editor to open file <span class="text-info">vs_toolchain.py</span>
+                and edit variable <code>CURRENT_DEFAULT_TOOLCHAIN_VERSION</code> to <code>2015</code> 
+                (let the python know you have visual studio 2015)<br/>
+                <figure class="figure">
+                    <img src="{{site.url}}/img/post/v8_toolchain.JPG" class="figure-img img-fluid" alt="toolchain"/>
+                    <figcaption class="figure-caption text-center">fig 2. edit toolchain</figcaption>
+                </figure>
+            </li>
+            <li>
+                Run <code>set GYP_GENERATORS=msvs</code> (If not, you won't get file <span class="text-info">all.sln</span> on next step)
+            </li>
+            <li>
+                Run <code>python gyp_v8 -Dtarget_arch=x64</code> (I am using 64 bit windows, you may change x64 to ia32 if on 32 bit windows)
+            </li>
+            <li>
+                If no error, you will see <span class="text-info">all.sln</span><br/>
+                <figure class="figure">
+                    <img src="{{site.url}}/img/post/v8_all_sln.JPG" class="figure-img img-fluid" alt="all_sln"/>
+                    <figcaption class="figure-caption text-center">fig 3. all.sln file</figcaption>
+                </figure>
+            </li>
+            <li>
+                Open <span class="text-info">all.sln</span> with visual studio 2015.
+                When you build the code, you may get a bunch of error.
+            </li>
+            <li>
+                Right click on the project you want to build, 
+                Under <span class="text-primary">C/C++ -> General</span>, change the warning level to <code>/W3</code> <br/>
+                (I change to <code>/W0</code> and set <code>NO(/WX-)</code> for <code>Treat Warnings As Errors</code>)<br/>
+                <figure class="figure">
+                    <img src="{{site.url}}/img/post/v8_warning.JPG" class="figure-img img-fluid" alt="warning"/>
+                    <figcaption class="figure-caption text-center">fig 4. disable warning message</figcaption>
+                </figure>
+            </li>
+        </ol>
+    </article>
+    <br/>
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="https://chandratechnotes.wordpress.com/2015/05/24/how-to-build-v8-source-code-on-windows-with-visual-studio/">How to build v8 source code on windows with visual studio</a></li>
+            <li><a href="https://github.com/v8/v8">v8 github repository</a></li>
+            <li><a href="https://chromium.googlesource.com/v8/v8.git">The official mirror of the V8 git repository</a></li>
+            <li><a href="https://docs.google.com/document/d/1q3JkYNJhib3ni9QvNKIY_uarVxeVDiDi6teE5MbVIGQ/edit">how to set up Eclipse for V8</a></li>
+            <li><a href="http://dev.chromium.org/developers/how-tos/install-depot-tools">The Chromium Projects</a></li>
+            <li><a href="https://stackoverflow.com/questions/38015585/cannot-generate-solution-file-of-v8-with-gyp-for-visual-studio-2013">Cannot generate solution file of v8 with gyp for visual studio 2013</a></li>
+            <li><a href="https://msdn.microsoft.com/en-us/library/thxezb7y.aspx">Warning Level</a></li>
+        </ol>
+    </article>
+<section>
+{% include postComment.html url=page.url %}

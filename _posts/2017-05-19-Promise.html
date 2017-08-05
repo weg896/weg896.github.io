@@ -1,0 +1,110 @@
+---
+layout: default
+title: "Asynchronous Object - Promise"
+meta: "This post will focus on Promise, an object that use for asynchronous operations"
+date: 2017-05-19
+category: javascript
+author: Jerry Guan
+---
+<section class="post-meta">
+    {% include postTitle.html title=page.title date=page.date category=page.category author=page.author %}
+    <div class="text-info">
+        <h5>index</h5>
+        <ul>
+            <li><a href="#basic_usage_of_promise">Basic Usage of Promise</a></li>
+            <li><a href="#understanding_promise">Understanding Promise</a></li>
+            <li><a href="#deeper_discuss_promisejobs_queue">Deeper Discuss PromiseJobs Queue</a></li>
+            <li><a href="#references">References</a></li>
+        </ul>
+    </div>
+    <h3 id="basic_usage_of_promise">Basic Usage of Promise</h3>
+    <article>
+        When you want to do asynchronous operations, like loading a picture from netowrk, 
+        a <code>Promise</code> object is your tatget.
+        <code>Promise</code> has three states: 
+        <span class="text-warning">Pending</span>, <span class="text-success">Fulfilled</span>, and <span class="text-danger">Rejected</span>. 
+        <ul>
+            <li><span class="text-warning">Pending</span> state is the initial state wich is waiting for response.</li>
+            <li><span class="text-success">Fulfilled</span> state indicates the asynchronous operation run success.</li>
+            <li><span class="text-danger">Rejected</span> state is opposit from Fulfilled, means the operation falied.</li>
+        </ul>
+        Here is an image for illustration.
+        <figure class="figure">
+            <img src="{{site.url}}/img/post/promise.svg" class="figure-img img-fluid rounded" alt="promise"/>
+            <figcaption class="figure-caption text-center">fig 1. basic promise</figcaption>
+        </figure>
+        <br/>
+
+        Before any function call of <code>resolve</code> or <code>reject</code>, 
+        A modifiled example code form <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">mozilla developer network</a>
+
+        <pre class="js">
+            <code>
+    function loadFile(fileURL) {
+        return new Promise(function(resolve, reject){
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function(){resolve(xhttp.responseText)}
+            xhttp.onerror = function(){reject(xhttp.statusText)}
+
+            xhttp.open("GET", fileURL, true);
+            xhttp.send();
+        }
+    }
+    
+    loadFile("http:\\www.example.com\test.txt").then(
+        function(responseText){
+            ...... // load file successfully
+        },
+        function(statusText){
+            ...... // error occur during loading
+        }
+    )
+            </code>
+        </pre>
+
+
+    </article>
+
+    <br/>
+    <h3 id="understanding_promise">Understanding Propagate</h3>
+    <article>
+        To Be Continue!
+        <!--
+        During the <code>Promise</code> construction, its constructor will set its attribute <code>[[PromiseState]]</code> to <span class="text-warning">pending</span>. 
+        Then after few steps, its run the pass-in function. 
+        When the pass-in function return, it doesn't means asynchronous operation inside the pass-in function has finished.
+        <br/><br/>
+        The pass-in function contains two parameters: <span class="text-success">resolve</span>, and <span class="text-danger">reject</span>. 
+        These two parameters are functions object.
+        While runs <span class="text-success">resolve()</span> or <span class="text-danger">reject()</span>, 
+        it often trigger <code>EnqueueJob()</code> and pass a <code>PromiseJob</code> object to <span class="text-info">PromiseJobs</span> queue (<code>microtasks</code> queue).
+        As the sample ajax code above, when <code>test.txt</code> is loaded correctly, it will call <span class="text-success">resolve()</span>.
+        A <code>PromiseResolveThenableJob</code> object (a <code>PromiseJob</code> object). 
+        <br/><br/>
+        When there is no running execution context and the execution context stack is empty (on the above example, after <code>loadFile().then()</code>). 
+
+    </article>
+    <br/>
+
+    <h3 id="deeper_"></h3>
+    <article>
+        Each event loop has a microtask queue. A microtask is a task that is originally to be queued on the microtask queue rather than a task queue. There are two kinds of microtasks: solitary callback microtasks, and compound microtasks.
+        -->
+    </article>
+    
+    <br/>
+    <h3 id="references">References</h3>
+    <article>
+        <ol>
+            <li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></li>
+            <li><a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/">Task, Microtask, Queue and Schedules</a></li>
+            <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#integration-with-the-javascript-job-queue">HTML Living Standard 8.1.3.7 Integration with the JavaScript job queue</a></li>
+            <li><a href="https://tc39.github.io/ecma262/#sec-jobs-and-job-queues">ECMAScript 2018  8.4 Jobs and Job Queues</a></li>
+            <li><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">ECMAScript 2018  25.4 Promise Objects</a></li>
+            <li><a href="https://developers.google.com/web/fundamentals/getting-started/primers/promises">JavaScript Promises: an Introduction</a></li>
+            <li><a href="https://www.zhihu.com/question/36972010">Promise的队列与setTimeout的队列有何关联?</a></li>
+        </ol>
+    </article>
+<section>
+{% include postComment.html url=page.url %}
