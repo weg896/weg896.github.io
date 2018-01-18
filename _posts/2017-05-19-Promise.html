@@ -13,7 +13,6 @@ author: Jerry Guan
         <ul>
             <li><a href="#basic_usage_of_promise">Basic Usage of Promise</a></li>
             <li><a href="#understanding_promise">Understanding Promise</a></li>
-            <li><a href="#deeper_discuss_promisejobs_queue">Deeper Discuss PromiseJobs Queue</a></li>
             <li><a href="#references">References</a></li>
         </ul>
     </div>
@@ -38,64 +37,115 @@ author: Jerry Guan
         Before any function call of <code>resolve</code> or <code>reject</code>, 
         A modifiled example code form <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">mozilla developer network</a>
 
-        <pre class="js">
-            <code>
-    function loadFile(fileURL) {
-        return new Promise(function(resolve, reject){
-            var xhttp = new XMLHttpRequest();
+        <pre class="js"><code>
+    /******************************/            
+    /* javascript for client site */
+    /******************************/ 
 
-            xhttp.onload = function(){resolve(xhttp.responseText)}
-            xhttp.onerror = function(){reject(xhttp.statusText)}
+    "use strict";
 
-            xhttp.open("GET", fileURL, true);
-            xhttp.send();
+    // to show that setTimeout function will run after the script reach the end
+    setTimeout(function(){
+        console.log("setTimeout run after 0 second delay");
+    },0)
+
+    console.log("script start");
+
+    var test = new Promise(function(resolve, reject){
+        console.log("promise: enter construction");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if (this.readyState == 4 &#38;&#38; this.status == 200) {
+                console.log("promise: before resolve");
+                var temp = this.responseText;
+                resolve(temp);
+                console.log("promise: after resolve");
+            }
         }
+        xhttp.open("GET", "http://localhost:8080/server.php", true);
+        xhttp.send();
+        console.log("promise: leave construction");
+    })
+
+    test.then(function(para){
+        console.log("promise: then " + 'value: '+para);
+    },function(para){
+        console.log("promise: catch");
+    })
+
+    setTimeout(function(){
+        console.log("setTimeout run after 2 second delay");
+    },2000)
+
+    setTimeout(function(){
+        console.log("setTimeout run after 5 second delay");
+    },5000)
+
+    console.log("script end")
+        </code></pre>
+        <pre class='php'><code>
+    /****************************/
+    /* php for server site      */
+    /* simulate network latency */
+    /****************************/
+
+    function jsPromsieTest(){
+        sleep(3);
+        echo "message return after 3 second called";
     }
     
-    loadFile("http:\\www.example.com\test.txt").then(
-        function(responseText){
-            ...... // load file successfully
-        },
-        function(statusText){
-            ...... // error occur during loading
-        }
-    )
-            </code>
-        </pre>
-
-
+    jsPromsieTest();
+        </code></pre>
+        The console log output result 
+        <pre><code>
+    script start
+    promise: enter executor
+    promise: leave executor
+    script end
+    setTimeout run after 0 second delay
+    setTimeout run after 2 second delay
+    promise: before resolve
+    promise: after resolve
+    promise: then value: message return after 3 second called
+    setTimeout run after 5 second delay
+        </code></pre>
     </article>
 
     <br/>
-    <h3 id="understanding_promise">Understanding Propagate</h3>
+    <h3 id="understanding_promise">Understanding Promise</h3>
     <article>
-        To Be Continue!
-        <pre><html>
-        &lt;!--
-        During the <code>Promise</code> construction, its constructor will set its attribute <code>[[PromiseState]]</code> to <span class="text-warning">pending</span>. 
-        Then after few steps, its run the pass-in function. 
-        When the pass-in function return, it doesn't means asynchronous operation inside the pass-in function has finished.
+        During the <code>Promise</code> construction (<code>new</code> a Promise Object), its constructor will set its attribute <code>[[PromiseState]]</code> to <span class="text-warning">pending</span>. 
+        Then after few steps, its run the pass-in function (<span class="text-info">executor</span>). 
         <br/><br/>
-        The pass-in function contains two parameters: <span class="text-success">resolve</span>, and <span class="text-danger">reject</span>. 
-        These two parameters are functions object.
-        While runs <span class="text-success">resolve()</span> or <span class="text-danger">reject()</span>, 
-        it often trigger <code>EnqueueJob()</code> and pass a <code>PromiseJob</code> object to <span class="text-info">PromiseJobs</span> queue (<code>microtasks</code> queue).
-        As the sample ajax code above, when <code>test.txt</code> is loaded correctly, it will call <span class="text-success">resolve()</span>.
-        A <code>PromiseResolveThenableJob</code> object (a <code>PromiseJob</code> object). 
+        On the upper example will run 
+        <pre class='js'><code>  
+    console.log("promise: enter construction"); 
+    ......
+    console.log("promise: leave construction");</code></pre>
+        <span class="text-info">executor</span> contains two parameters: <span class="text-success">resolve</span>, and <span class="text-danger">reject</span>, 
+        and both parameters are functions object.
+        <pre class='js'><code>
+    ......
+    test.then(function(para){
+    ......</code></pre>
+        <code>test.then()</code> trigger <code>PerformPromiseThen()</code> which will put the pass in function of <code>then </code> to <code>[[PromiseFulfillReactions]]</code> 
+        until <code>server.php</code> pass back message (trigger <code>AsyncFunctionAwait()</code>)
         <br/><br/>
-        When there is no running execution context and the execution context stack is empty (on the above example, after <code>loadFile().then()</code>). 
-
+        As the sample ajax code above, when <code>server.php</code> has pass back message, it will call <span class="text-success">resolve()</span>, 
+        then trigger <code>AsyncFunctionAwait()</code> to call <code>PerformPromiseThen()</code>, 
+        <code>PerformPromiseThen()</code> will create <span class="text-info">PromiseReaction records</span>, 
+        and put it to <code>PromiseJobs</code> queue (<code>microtasks</code> queue).
+        <br/><br/>
+        If there is no <span class="text-info">execution context</span> running and the <span class="text-info">execution context stack</span> is empty,
+        <code>PromiseJobs</code> queue will pop <span class="text-info">PromiseReaction records</span> and run.
+        In this case is perform function
+        <pre class='js'><code>
+    function(para){
+        console.log("promise: then " + 'value: '+para);
+    }</code></pre>
     </article>
     <br/>
 
-    <h3 id="deeper_"></h3>
-    <article>
-        Each event loop has a microtask queue. A microtask is a task that is originally to be queued on the microtask queue rather than a task queue. There are two kinds of microtasks: solitary callback microtasks, and compound microtasks.
-        --&gt;
-        </html></pre>
-    </article>
-    
-    <br/>
     <h3 id="references">References</h3>
     <article>
         <ol>
